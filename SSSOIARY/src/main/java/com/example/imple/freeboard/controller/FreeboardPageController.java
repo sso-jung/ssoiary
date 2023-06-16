@@ -50,7 +50,7 @@ public class FreeboardPageController implements ListController, PageableControll
 		}
 		
 		PageHelper.startPage(pageNum, pageSize);
-		var list = postMapper.selectAll();
+		var list = postMapper.selectAllWithReplyCount();
 		var paging = PageInfo.of(list, 10);
 		var postCount = postMapper.countAll();
 		model.addAttribute("list", list);

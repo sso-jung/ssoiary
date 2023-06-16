@@ -17,6 +17,15 @@ public interface FreeboardPostMapper {
     @Select("select * from freeboard_post order by id desc")
     List<FreeboardPost> selectAll();
     
+    @Select("""
+    		select p.*, count(r.id) as reply
+			from freeboard_post p
+			left join freeboard_reply r on p.id = r.id
+			group by p.id, p.title, p.content, p.day,  p.writer
+			order by p.id desc
+    		""")
+    List<FreeboardPost> selectAllWithReplyCount();
+    
     @Select("select count(*) from freeboard_post")
     int countAll();
 

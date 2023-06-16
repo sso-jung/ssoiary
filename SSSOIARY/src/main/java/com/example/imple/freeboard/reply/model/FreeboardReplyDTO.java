@@ -1,4 +1,4 @@
-package com.example.imple.freeboard.model;
+package com.example.imple.freeboard.reply.model;
 
 import java.util.Date;
 
@@ -15,31 +15,29 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(staticName = "of")
 @NoArgsConstructor
 @Builder
-public class FreeboardPostDTO {
+public class FreeboardReplyDTO {
 	@NotNull
     long id;
 	
 	@NotBlank
-	@Length(min = 1, max = 100)
-    String title;
-	
-	@Length(min = 0, max = 4000)
+	@Length(min = 1, max = 2000)
     String content;
 	
     Date day;
     
-    Integer reply;
-    
+    @NotBlank
     String writer;
     
-	public FreeboardPost getModel(String writer, Date day) {
-		return FreeboardPost.builder()
+    @NotNull
+    long replyId;
+    
+	public FreeboardReply getModel(String writer, Date day) {
+		return FreeboardReply.builder()
 				  .id(id)
-				  .title(title.trim())
 				  .content(content)
 				  .day(day)
-				  .reply(0)
 				  .writer(writer)
+				  .replyId(replyId)
 				  .build();
 	}
 }

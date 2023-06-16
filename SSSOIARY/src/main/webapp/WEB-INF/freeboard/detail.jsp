@@ -204,7 +204,7 @@
 	    	
 	    		<table class="table board" style="margin-bottom: 0px; width:100%; table-layout: fixed;">
 				<thead>
-					<tr>
+					<tr style="background: #EAEAEA;">
 						<th style="width: 10%;">글번호</th>
 						<th style="width: 40%;">제목</th>
 						<th style="width: 15%;">작성자</th>
@@ -222,14 +222,25 @@
 				</tbody>
 			</table>
 			<div>
+				<div style="padding-top:10px; background: #EAEAEA;">
+				<span style="font-family: 'MBC1961GulimM'; font-size: 26px; margin-left: 5%;">COMMENTS</span>
+				<hr style="color: #EAEAEA; margin-top: 5px; margin-bottom: 0px;">
+				</div>
 			<table class ="table reply">
 				<tbody>
-					<tr>
-						<td>${post.writer}</td><td><fmt:formatDate pattern="yy-MM-dd hh:mm:ss" value="${post.day}"/></td>
+				<c:if test="${reply.size() == 0}">
+					<tr style="border-bottom: 1px solid #EAEAEA;">
+						<td width=5%;></td><td style="vertical-align: middle; height:100px;">작성된 댓글이 없습니다.</td>
 					</tr>
+				</c:if>
+				<c:forEach var="r" items="${reply}">
 					<tr>
-						<td></td><td>${post.title}</td>
+						<td width=10%; style="white-space: nowrap; text-align: center; vertical-align: middle;" rowspan="2">${r.writer}</td><td><fmt:formatDate pattern="yy-MM-dd hh:mm:ss" value="${r.day}"/></td>
 					</tr>
+					<tr style="border-bottom: 1px solid #EAEAEA;">
+						<td>${r.content}</td>
+					</tr>
+				</c:forEach>
 				</tbody>
 			</table>
 			</div>
