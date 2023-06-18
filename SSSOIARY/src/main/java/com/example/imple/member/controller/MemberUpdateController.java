@@ -62,7 +62,7 @@ public class MemberUpdateController implements UpdateController<MemberDTO> {
 		}
 		
 		var name = user.getUsername();		
-		var list = mapper.selectByNameWithGrade(name);
+		var list = mapper.selectMemberByName(name);
 		int pwLength = list.getPassword().length();
 		String pwEncode = "*".repeat(pwLength);
 		session.setAttribute("pwEncode", pwEncode);

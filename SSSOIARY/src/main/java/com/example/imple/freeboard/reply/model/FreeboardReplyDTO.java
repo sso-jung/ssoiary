@@ -31,7 +31,7 @@ public class FreeboardReplyDTO {
     @NotNull
     long replyId;
     
-	public FreeboardReply getModel(String writer, Date day) {
+	public FreeboardReply getModel(String writer, Date day, Integer id) {
 		return FreeboardReply.builder()
 				  .id(id)
 				  .content(content)

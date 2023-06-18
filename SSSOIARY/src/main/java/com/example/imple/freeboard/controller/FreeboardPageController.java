@@ -7,7 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.imple.freeboard.mapper.FreeboardPostMapper;
+import com.example.imple.freeboard.reply.mapper.FreeboardReplyMapper;
 import com.example.imple.grade.mapper.GradeMapper;
+import com.example.imple.member.mapper.MemberMapper;
 import com.example.standard.controller.ListController;
 import com.example.standard.controller.PageableController;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -22,30 +24,38 @@ import jakarta.servlet.http.HttpServletRequest;
 public class FreeboardPageController implements ListController, PageableController {
 
 	@Autowired
-	GradeMapper gradeMapper;
+	MemberMapper memberMapper;
 	
 	@Autowired
 	FreeboardPostMapper postMapper;
+	
+	@Autowired
+	FreeboardReplyMapper replyMapper;
 	
 	@Autowired
 	ObjectMapper json;
 	
 	@Override
 	public void list(User user, Model model, HttpServletRequest request) {
-		var list = gradeMapper.selectAll();
-		model.addAttribute("list", list);
+		var gradeList = memberMapper.selectAll();
+		model.addAttribute("gradeList", gradeList);
 	}
 
 	@Override
 	public String page(int pageNum, int pageSize, Model model, HttpServletRequest request) {
 		
-		var gradeList = gradeMapper.selectAll();
+		var gradeList = memberMapper.selectAll();
 		model.addAttribute("gradeList", gradeList);
 		
 		String getDeleteId = request.getParameter("deleteId");
 		if (getDeleteId != null && !getDeleteId.isEmpty()) {
 			int deleteId = Integer.parseInt(getDeleteId);
-			postMapper.deletePost(deleteId);
+			replyMapper.deleteReplyByPostId(deleteId);
+			int replies = replyMapper.countById(deleteId);
+			System.out.println(replies);
+			if (replies==0) {
+				postMapper.deletePost(deleteId);
+			}
 			return "redirect:/freeboard/page/{pageNum}/10";
 		}
 		

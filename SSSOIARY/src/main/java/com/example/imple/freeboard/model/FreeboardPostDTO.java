@@ -28,8 +28,6 @@ public class FreeboardPostDTO {
 	
     Date day;
     
-    Integer reply;
-    
     String writer;
     
 	public FreeboardPost getModel(String writer, Date day) {
@@ -38,7 +36,6 @@ public class FreeboardPostDTO {
 				  .title(title.trim())
 				  .content(content)
 				  .day(day)
-				  .reply(0)
 				  .writer(writer)
 				  .build();
 	}

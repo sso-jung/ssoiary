@@ -105,6 +105,9 @@
 		line-height: 1;
 		font-size: 13px;
 	}
+	.page-item.active .page-link {
+ 		background-color: #4375DB;
+	}
 </style>
 <script type="text/javascript">
 	$(document).on('click', '#deletePost', function(e) {	// 삭제 버튼
@@ -189,7 +192,7 @@
 						<td>${status.index + 1}</td>
 						<td>${g.name}</td>
 						<td>${g.point}</td>
-						<td>${g.postcount}</td>
+						<td>${g.postCount}</td>
 						<td>${g.rank}</td>
 					</tr>
 				</c:forEach>
@@ -198,7 +201,7 @@
 			</div>
 	    </div>
 	    <div class="col-md-10">
-	    	<h1 style="margin-bottom: 40px; margin-left: 5%; font-family: 'MBC1961GulimM';">자유게시판<span class="badge">${postCount}</span></h1>
+	    	<h1 style="margin-bottom: 40px; margin-left: 5%; font-family: 'MBC1961GulimM';">자유게시판<span class="badge">${freeboardPostCount}</span></h1>
 	    	
 	    		<table class="table table-hover board" style="margin-bottom: 0px; width:100%; table-layout: fixed;">
 				<thead>
@@ -261,13 +264,13 @@
 					<li class="page-item"><a class="page-link" href="/freeboard/page/${paging.pages}/${paging.pageSize}"> >> </a>
 				</c:if>
 				</ul>
-				<a href="/freeboard/create?page=${paging.pageNum}"><button class="btn btn-primary ml-auto" style="white-space: nowrap;">글 작성</button></a>
+				<a href="/freeboard/create?page=${paging.pageNum}"><button class="btn ml-auto" style="background:#4375DB; color:white; white-space: nowrap;">글 작성</button></a>
 			</div>
 			<form action="/freeboard/search/1/10">
 				<div class="form-group d-flex justify-content-center">
 			    <div class="col-sm-12 d-flex flex-row" style="width: 60%;">
 			      <input type="text" autocomplete="off" class="form-control" id="keyword" name="keyword" placeholder="제목, 혹은 작성자로 글을 검색하세요." style="text-align: left;">
-			      <button type="submit" class="btn btn-primary" value="검색하기" style="margin-left: 10px; white-space: nowrap;">검색</button>
+			      <button type="submit" class="btn" value="검색하기" style="background:#4375DB; color:white; margin-left: 10px; white-space: nowrap;">검색</button>
 			    </div>
 				</div>
 			</form>

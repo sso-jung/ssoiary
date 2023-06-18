@@ -1,7 +1,5 @@
 package com.example.imple.member.model;
 
-import com.example.imple.grade.model.Grade;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,5 +15,8 @@ public class Member {
     @NonNull String name;
     @NonNull String password;
     String roles;
-    Grade grade;
+    Integer postCount;
+    Integer replyCount;
+    Integer point;
+    String rank;
 }

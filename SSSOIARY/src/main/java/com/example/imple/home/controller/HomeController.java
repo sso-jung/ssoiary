@@ -9,24 +9,33 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.example.imple.freeboard.mapper.FreeboardPostMapper;
+import com.example.imple.freeboard.reply.mapper.FreeboardReplyMapper;
 import com.example.imple.grade.mapper.GradeMapper;
+import com.example.imple.member.mapper.MemberMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.websocket.Session;
 
 @Controller
 public class HomeController {
 
 	@Autowired
-	GradeMapper mapper;
+	MemberMapper memberMapper;
+	
+	@Autowired
+	FreeboardPostMapper postMapper;
+	
+	@Autowired
+	FreeboardReplyMapper replyMapper;
 	
 	@GetMapping("/")
 	String home(@AuthenticationPrincipal User user, Model model, HttpServletRequest request) {
 		var session = request.getSession();
 		var name = user.getUsername();
 		session.setAttribute("name", name);
-		var list = mapper.selectAll();
-		model.addAttribute("list", list);
+		var gradeList = memberMapper.selectAll();
+		model.addAttribute("gradeList", gradeList);
+		
 		return "home";
 	}
 	

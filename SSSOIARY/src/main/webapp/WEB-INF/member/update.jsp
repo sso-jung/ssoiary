@@ -27,6 +27,12 @@
 	    font-weight: normal;
 	    font-style: normal;
 	}
+	@font-face {
+	    font-family: 'omyu_pretty';
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+	    font-weight: normal;
+	    font-style: normal;
+	}
 	.title {
 		margin-top: 20px;
 		height: 150px;
@@ -53,16 +59,28 @@
             max-width: 100%;
         }
     }
-   	/* nav Bar */
-	h1,ul {
+	h1.info {
 		font-family: 'GangwonEdu_OTFBoldA';
 	}
-	ul {
+	.nav-link {
 		font-size: 30px;
+		font-family: 'omyu_pretty';
+		white-space: nowrap;
+		font-weight: lighter;
 	}
-		.dropdown-item {
+	.navbar-text {
+		font-family: 'omyu_pretty';
+		font-size: 32px;
+	}
+	.dropdown-item {
 		font-size: 24px;
+		font-family: 'omyu_pretty';
 	}
+	@media (min-width: 768px) {
+	  .nav-item, .dropdown-item {
+	  	text-align: center;
+	  }
+	}/* NavBar */
 	@media (min-width: 768px) {
 	  .nav-item, .dropdown-item {
 	  	text-align: center;
@@ -80,19 +98,19 @@
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark justify-content-center">
 	<div class="container">
-  <h2 class="navbar-text" style="color:white; font-weight: bold; margin-right: 50px;">CATEGORY</h2>
+  <h2 class="navbar-text" style="color:white; font-weight: bold; margin-right: 50px; margin-top: 10px;">CATEGORY</h2>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
       </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      <li class="nav-item" style="width:200px;">
-        <a class="nav-link" href="/" style="color:white;">Home </a>
+      <li class="nav-item" style="width:250px;">
+        <a class="nav-link" href="/" style="color:white;">HOME </a>
       </li>
-      <li class="nav-item" style="width:200px;">
-        <a class="nav-link" href="/freeboard/page/1/10" style="color:#FECDDE;">FREE BOARD</a>
+      <li class="nav-item" style="width:250px;">
+        <a class="nav-link" href="/freeboard/page/1/10" style="color:white;">FREE BOARD</a>
       </li>
-      <li class="nav-item dropdown" style="width:200px;">
+      <li class="nav-item dropdown" style="width:250px;">
         <a class="nav-link dropdown-toggle" href="#" style="color:white;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           DIARY
         </a>
@@ -103,7 +121,7 @@
           <li><hr class="dropdown-divider"></li>
           <li><a class="dropdown-item" href="#">EVERYONE</a></li>
         </ul>
-      <li class="nav-item" style="width:200px;">
+      <li class="nav-item" style="width:250px;">
         <a class="nav-link active" aria-current="page" href="/game/list" style="color: white;">GAME</a>
       </li>
       </li>
@@ -123,7 +141,7 @@
 			</div>
 			<div class="mb-4 form-group">
 				<label class="form-lable mb-3" for="password">비밀번호</label>
-				<input class="form-control"    id="password"  name="password"  placeholder="변경할 비밀번호를 입력하세요.""/>
+				<input class="form-control"    id="password"  name="password"  placeholder="변경할 비밀번호를 입력하세요." autocomplete="off" />
 			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</form>	

@@ -20,10 +20,16 @@ public interface FreeboardReplyMapper {
     @Select("select count(*) from freeboard_reply where id = #{id}")
     int countById(@Param("id") long id);
     
+    @Select("select count(*) from freeboard_reply where writer = #{writer}")
+    int replyCountByWriter(@Param("writer") String writer);
+    
     int insertReply(@Param("r") FreeboardReply reply);
 
     @Delete("delete from freeboard_reply where reply_id = #{replyId}")
-    int deletePost(@Param("replyId") long replyId);
+    int deleteReplyById(@Param("replyId") long replyId);
+    
+    @Delete("delete from freeboard_reply where id = #{id}")
+    int deleteReplyByPostId(@Param("id") long id);
     
     @Update("""
     		update freeboard_post

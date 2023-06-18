@@ -30,6 +30,12 @@
 	    font-weight: normal;
 	    font-style: normal;
 	}
+	@font-face {
+	    font-family: 'omyu_pretty';
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+	    font-weight: normal;
+	    font-style: normal;
+	}	
 	.header {
 		margin-top: 20px;
 		height: 150px;
@@ -57,15 +63,28 @@
 		overflow: hidden;
 		white-space: nowrap;
 	} /* 랭킹 표 */
-	h1,ul {
+	h1.info {
 		font-family: 'GangwonEdu_OTFBoldA';
 	}
-	ul {
+	.nav-link {
 		font-size: 30px;
+		font-family: 'omyu_pretty';
+		white-space: nowrap;
+		font-weight: lighter;
+	}
+	.navbar-text {
+		font-family: 'omyu_pretty';
+		font-size: 32px;
 	}
 	.dropdown-item {
 		font-size: 24px;
+		font-family: 'omyu_pretty';
 	}
+	@media (min-width: 768px) {
+	  .nav-item, .dropdown-item {
+	  	text-align: center;
+	  }
+	}/* NavBar */
 	@media (min-width: 768px) {
 	  .nav-item, .dropdown-item {
 	  	text-align: center;
@@ -114,19 +133,19 @@ $(document).ready(function() {
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark justify-content-center">
 	<div class="container">
-  <h2 class="navbar-text" style="color:white; font-weight: bold; margin-right: 50px;">CATEGORY</h2>
+  <h2 class="navbar-text" style="color:white; font-weight: bold; margin-right: 50px; margin-top: 10px;">CATEGORY</h2>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
       </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      <li class="nav-item" style="width:200px;">
-        <a class="nav-link" href="/" style="color:white;">Home </a>
+      <li class="nav-item" style="width:250px;">
+        <a class="nav-link" href="/" style="color:white;">HOME </a>
       </li>
-      <li class="nav-item" style="width:200px;">
+      <li class="nav-item" style="width:250px;">
         <a class="nav-link" href="/freeboard/page/1/10" style="color:#FECDDE;">FREE BOARD</a>
       </li>
-      <li class="nav-item dropdown" style="width:200px;">
+      <li class="nav-item dropdown" style="width:250px;">
         <a class="nav-link dropdown-toggle" href="#" style="color:white;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           DIARY
         </a>
@@ -137,7 +156,7 @@ $(document).ready(function() {
           <li><hr class="dropdown-divider"></li>
           <li><a class="dropdown-item" href="#">EVERYONE</a></li>
         </ul>
-      <li class="nav-item" style="width:200px;">
+      <li class="nav-item" style="width:250px;">
         <a class="nav-link active" aria-current="page" href="/game/list" style="color: white;">GAME</a>
       </li>
       </li>
@@ -148,7 +167,7 @@ $(document).ready(function() {
 <div class="container-fluid">
 	<div class="row d-flex flex-md-row">
 	    <div class="col-md-2 d-none d-md-flex flex-column align-items-center" style="padding-top: 50px;">
-   			<h1 style="margin-top: 20px; margin-bottom: 50px; word-break: keep-all; text-align: center;">
+   			<h1 class="info" style="margin-top: 20px; margin-bottom: 50px; word-break: keep-all; text-align: center;">
    				<sec:authentication property="name"/>님, 환영합니다.
    			</h1>
 			<div class="d-flex flex-row align-items-center">
@@ -156,7 +175,7 @@ $(document).ready(function() {
 			<a href="/member/list"><button class="btn" style="margin-left: 10px; background:#FCE2EF;">내 정보</button></a>
 			</div>
 			<div style="padding-top: 80px; display:flex; flex-direction: column; align-items: center; justify-content: center;">
-		    <h1 style=" margin-bottom: 30px;">활동 랭킹</h1>
+		    <h1 class="info" style=" margin-bottom: 30px;">활동 랭킹</h1>
 		    <table class="table table-hover ranking" style="width:100%; table-layout: fixed;">
     		<thead>
 				<tr>
@@ -173,7 +192,7 @@ $(document).ready(function() {
 						<td>${status.index + 1}</td>
 						<td>${g.name}</td>
 						<td>${g.point}</td>
-						<td>${g.postcount}</td>
+						<td>${g.postCount}</td>
 						<td>${g.rank}</td>
 					</tr>
 				</c:forEach>
@@ -205,7 +224,7 @@ $(document).ready(function() {
 					<label class="form-label mb-2" for="content">내용</label>
 					<textarea class="form-control summernote" name="content" id="content" autocomplete="off"  style="text-align: left; height:600px;" placeholder="내용을 입력하세요.">${post.content}</textarea>
 				</div>
-				<button type="submit" class="btn btn-primary">작성 완료</button>
+				<button type="submit" class="btn" style="background:#4375DB; color:white;">작성 완료</button>
 			</form>	    	
 	    </div>
 	</div>

@@ -5,15 +5,13 @@
 <insert id="insertReply">
 	<selectKey keyProperty="reply_id" resultType="long" order="BEFORE">
 		select freeboard_reply_seq.nextval from dual
-	</selectKey>
-	insert into freeboard_reply
+	</selectKey>insert into freeboard_reply
 	values (
-		#{p.id, 		jdbcType=NUMERIC},
-		#{p.content,	jdbcType=VARCHAR},
-		#{p.day,		jdbcType=DATE},
-		#{p.writer,		jdbcType=VARCHAR},
+		#{r.id, 		jdbcType=NUMERIC},
+		#{r.content,	jdbcType=VARCHAR},
+		#{r.day,		jdbcType=DATE},
+		#{r.writer,		jdbcType=VARCHAR},
 		#{reply_id}
-	)
-</insert>
+	)</insert>
 
 </mapper>

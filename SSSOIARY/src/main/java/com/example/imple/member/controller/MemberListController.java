@@ -22,7 +22,7 @@ public class MemberListController implements ListController {
 	@Override
 	public void list(@AuthenticationPrincipal User user, Model model, HttpServletRequest request) {
 		var name = user.getUsername();
-		var list = mapper.selectByNameWithGrade(name);
+		var list = mapper.selectMemberByName(name);
 		int pwLength = list.getPassword().length();
 		String pwEncode = "*".repeat(pwLength);
 		var session = request.getSession();

@@ -28,6 +28,9 @@ public interface FreeboardPostMapper {
     
     @Select("select count(*) from freeboard_post")
     int countAll();
+    
+    @Select("select count(*) from freeboard_post where writer = #{writer}")
+    int postCountByWriter(@Param("writer") String writer);
 
     @Select("select * from freeboard_post where writer=#{writer}")
     FreeboardPost selectPostByWriter(String writer);
@@ -57,6 +60,17 @@ public interface FreeboardPostMapper {
     		where title like '%' || #{keyword} || '%' or writer like '%' || #{keyword} || '%' 
     		""")
     List<FreeboardPost> selectByKeyword(@Param("keyword") String keyword);
+    
+    @Select("""
+    	    select p.*, count(r.id) as reply
+    	    from freeboard_post p
+    	    left join freeboard_reply r on p.id = r.id
+    	    where (p.title like '%' || #{keyword} || '%' or p.writer like '%' || #{keyword} || '%')
+    	    group by p.id, p.title, p.content, p.day, p.writer
+    	    order by p.id desc
+    	    """)
+    	List<FreeboardPost> selectByKeywordWithReplyCount(@Param("keyword") String keyword);
+
     
     @Select("""
     		select count(*) from freeboard_post

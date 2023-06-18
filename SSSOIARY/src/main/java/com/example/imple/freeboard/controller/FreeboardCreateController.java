@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.imple.freeboard.mapper.FreeboardPostMapper;
 import com.example.imple.freeboard.model.FreeboardPostDTO;
-import com.example.imple.grade.mapper.GradeMapper;
+import com.example.imple.member.mapper.MemberMapper;
 import com.example.standard.controller.CreateController;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,7 +25,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class FreeboardCreateController implements CreateController<FreeboardPostDTO> {
 
 	@Autowired
-	GradeMapper gradeMapper;
+	MemberMapper memberMapper;
 	
 	@Autowired
 	FreeboardPostMapper mapper;
@@ -33,7 +33,7 @@ public class FreeboardCreateController implements CreateController<FreeboardPost
 	@Override
 	public void create(Model model, HttpServletRequest request) {
 		
-		var gradeList = gradeMapper.selectAll();
+		var gradeList = memberMapper.selectAll();
 		model.addAttribute("gradeList", gradeList);
 		
 		var error = request.getParameter("error");
@@ -50,7 +50,7 @@ public class FreeboardCreateController implements CreateController<FreeboardPost
 	public String create(FreeboardPostDTO dto, BindingResult binding, Model model, HttpServletRequest request,
 			RedirectAttributes attr) {
 		
-		var gradeList = gradeMapper.selectAll();
+		var gradeList = memberMapper.selectAll();
 		model.addAttribute("gradeList", gradeList);
 		
 		var session = request.getSession();

@@ -110,15 +110,25 @@
 	}
 </style>
 <script type="text/javascript">
-	$(document).on('click', '#deletePost', function(e) {	// 삭제 버튼
+	$(document).on('click', '#deletePost', function(e) {	// 게시글 삭제 버튼
 	  e.preventDefault();
   	  var postId = ${post.id};
 	  var deleteUrl = "/freeboard/page/1/10?deleteId=" + postId;
-	  var result = confirm("정말 삭제하시겠습니까?");
+	  var result = confirm("게시글을 삭제하시겠습니까?");
 	  if (result) {
 		  window.location.href = deleteUrl;  
-	  } else {
 	  }
+	});
+	$(document).on('click', '#deleteReply', function(e) {	// 댓글 삭제 버튼
+		  e.preventDefault();
+	  	  var page = $(this).data('page');
+	  	  var postId = ${post.id};
+	  	  var replyId = $(this).data('reply-id');
+		  var deleteUrl = "/freeboard/detail/" + postId + "?page=" + page + "&deleteReplyId=" + replyId;
+		  var result = confirm("댓글을 삭제하시겠습니까?");
+		  if (result) {
+			  window.location.href = deleteUrl;  
+		  } 
 	});
 </script>
 <title>SSOIARY</title>
@@ -191,7 +201,7 @@
 						<td>${status.index + 1}</td>
 						<td>${g.name}</td>
 						<td>${g.point}</td>
-						<td>${g.postcount}</td>
+						<td>${g.postCount}</td>
 						<td>${g.rank}</td>
 					</tr>
 				</c:forEach>
@@ -223,7 +233,7 @@
 			</table>
 			<div>
 				<div style="padding-top:10px; background: #EAEAEA;">
-				<span style="font-family: 'MBC1961GulimM'; font-size: 26px; margin-left: 5%;">COMMENTS</span>
+				<span style="font-family: 'MBC1961GulimM'; font-size: 20px; margin-left: 5%;">COMMENTS</span>
 				<hr style="color: #EAEAEA; margin-top: 5px; margin-bottom: 0px;">
 				</div>
 			<table class ="table reply">
@@ -235,7 +245,11 @@
 				</c:if>
 				<c:forEach var="r" items="${reply}">
 					<tr>
-						<td width=10%; style="white-space: nowrap; text-align: center; vertical-align: middle;" rowspan="2">${r.writer}</td><td><fmt:formatDate pattern="yy-MM-dd hh:mm:ss" value="${r.day}"/></td>
+						<td width=10%; style="white-space: nowrap; text-align: center; vertical-align: middle;" rowspan="2">${r.writer}</td>
+						<td><fmt:formatDate pattern="yy-MM-dd hh:mm:ss" value="${r.day}"/></td>
+						<c:if test="${r.writer eq name}">
+							<td><button class="btn btn-danger btn-sm" id="deleteReply" data-reply-id="${r.replyId}" data-page="${param.page}">X</button></td>
+						</c:if>
 					</tr>
 					<tr style="border-bottom: 1px solid #EAEAEA;">
 						<td>${r.content}</td>
@@ -243,12 +257,22 @@
 				</c:forEach>
 				</tbody>
 			</table>
+			<form action="/freeboard/detail/${post.id}/${param.page}/createReply">
+				<div class="form-group d-flex justify-content-center">
+			    <div class="col-sm-12 d-flex flex-row">
+			      <textarea class="form-control" name="content" id="content" autocomplete="off"  style="text-align: left; height:70px;" placeholder="댓글을 입력하세요."></textarea>
+			      <button type="submit" class="btn" value="검색하기" style="background:#4375DB; color:white; margin-left: 10px; white-space: nowrap;">등록</button>
+			    </div>
+				</div>
+			</form>
 			</div>
 			<div class="d-flex flex-row justify-content-between" style="width: 90%; margin-top: 10px;">
-				<a href="/freeboard/page/${param.page}/10"><button class="btn btn-primary" style="white-space: nowrap;">목록으로</button></a>
+				<a href="/freeboard/page/${param.page}/10"><button class="btn " style="background:#4375DB; color:white; white-space: nowrap;">목록으로</button></a>
 				<div>
-					<a href="/freeboard/update?id=${post.id}&page=${param.page}"><button class="btn btn-warning" style="white-space: nowrap; color: white;">수정</button></a>
-					<button class="btn btn-danger" id="deletePost" style="white-space: nowrap;">삭제</button>
+					<c:if test="${post.writer eq name}">
+					<a href="/freeboard/update?id=${post.id}&page=${param.page}"><button class="btn " style="background:#EAEAEA; white-space: nowrap;">수정</button></a>
+					<button class="btn" id="deletePost" style="background:#FCE2EF; white-space: nowrap;">삭제</button>
+					</c:if>
 				</div>
 			</div>
 	    </div>
