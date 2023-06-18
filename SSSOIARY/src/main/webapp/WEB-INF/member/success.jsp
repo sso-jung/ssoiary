@@ -109,7 +109,7 @@
           DIARY
         </a>
         <ul class="dropdown-menu" style="background: #E3E3E3;">
-          <li><a class="dropdown-item" href="#">MONTHLY</a></li>
+          <li><a class="dropdown-item" href="/diary/monthly/list">MONTHLY</a></li>
           <li><a class="dropdown-item" href="#">WEEKLY</a></li>
           <li><a class="dropdown-item" href="#">DAILY</a></li>
           <li><hr class="dropdown-divider"></li>

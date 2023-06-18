@@ -69,6 +69,10 @@ dependencies {
     implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:1.4.6'
     // https://mvnrepository.com/artifact/org.webjars.npm/summernote
 	implementation 'org.webjars.npm:summernote:0.8.20'
+	// https://mvnrepository.com/artifact/org.webjars/sweetalert
+	implementation 'org.webjars:sweetalert:2.1.0'
+
+	
     
     
 }
