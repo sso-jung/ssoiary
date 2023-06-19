@@ -2,6 +2,7 @@ package com.example.imple.diary.monthly.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -12,14 +13,17 @@ import com.example.imple.diary.monthly.model.Events;
 @Mapper
 public interface MonthlyEventsMapper {
 
-    @Select("select * from events")
+    @Select("select * from monthly_events")
     List<Events> selectAll();
     
     @Insert("""
-    		insert into events (title, starttime, endtime)
-    		values (#{e.title}, #{e.starttime}, #{e.endtime})
+    		insert into monthly_events (title, starttime, endtime, writer)
+    		values (#{e.title}, #{e.starttime}, #{e.endtime}, #{writer})
     		
     		""")
-    int insertEvent(@Param("e") Events e);
+    int insertEvent(@Param("e") Events e, @Param("writer") String writer);
+    
+    @Delete ("delete from monthly_events where title = #{e.title} and starttime = #{e.starttime, jdbcType=TIMESTAMP}")
+    int deleteEvent(@Param("e") Events e);
     
 }

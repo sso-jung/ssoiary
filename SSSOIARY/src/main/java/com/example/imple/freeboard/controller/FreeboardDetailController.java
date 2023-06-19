@@ -91,11 +91,16 @@ public class FreeboardDetailController implements DetailController<Integer> {
 		var writer = (String)session.getAttribute("name");
 		var day = new Date();
 		
+		var newReply = dto.getModel(writer, day, id);
+		
+		String content = newReply.getContent().trim();
+		session.setAttribute("content", content);
 		if (binding.hasErrors()) {
-			return "redirect:/freeboard/detail?error";
+			return "redirect:/freeboard/detail/{id}?page={page}&?error";
+		} else if (content.isEmpty()) {
+			return "redirect:/freeboard/detail/{id}?page={page}&?error";
 		}
 		
-		var newReply = dto.getModel(writer, day, id);
 		replyMapper.insertReply(newReply);
 		
 		return "redirect:/freeboard/detail/"+id+"?page="+page;

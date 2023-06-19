@@ -113,18 +113,50 @@
  		background-color: #4375DB;
 	}
 	.fc-day-today {
-	  background-color: #FCE2EF;
-	  opacity: 0.7;
+	  background-color: #FFE7F0	!important;
+	  opacity: 1;
 	}
 	.fc-event {
-	  background-color: #8C8C8C;
+	  background-color: #A6A6A6;
 	  color: white;
 	  opacity: 1;
-	  height: 30px;
+	  height: 38px;
 	  border: none;
-	  font-size: 20px;
-	  font-family: inherit;
+	  font-size: 1.6rem;
+	  font-family: 'omyu_pretty';
 	}
+	   /*요일*/
+	  .fc-col-header-cell-cushion {
+		font-family: 'omyu_pretty';
+		font-size: 1.6rem;
+	  }
+	  .fc-col-header-cell-cushion:hover {
+		text-decoration: none;
+		font-family: 'omyu_pretty';
+		font-size: 1.6rem;
+	  }	
+	.fc-day-sun a {
+	  color: #CD3B3B;
+	  text-decoration: none;
+	}
+	.fc-day-sat a {
+	  color: #4374D9;
+	  text-decoration: none;
+	}
+	  .fc-daygrid-day-number{
+		color: #000;
+		font-family: 'omyu_pretty';
+		font-size: 1.4rem;
+	  }
+	  /*month/week/day*/
+	  .fc-button{
+		  font-family: 'omyu_pretty'	!important;
+		  font-size: 1.3rem				!important;
+	  }
+	  .fc-toolbar-title {
+	  	font-family: 'omyu_pretty';
+	  	font-size: 50px !important;
+	  }
 </style>
    <script>
     	document.addEventListener('DOMContentLoaded', function() {
@@ -140,12 +172,19 @@
                 navLinks: true,
                 editable: true,
                 
+                firstDay: 1,
+                titleFormat: function (date) {
+                	year = date.date.year;
+                	month = date.date.month + 1;
+                	
+                	return year + "년 " + month + "월";
+                },
                 // Create new event
                 select: function (arg) {
                 	var selectedDate = arg.startStr;
                     Swal.fire({
                         html: "<div class='mb-7'>일정을 추가하시겠습니까?</div><div class='fw-bold mb-5'></div>\
-                        	   <label for='title'>일정</label><input type='text' class='form-control' name='title' placeholder='일정 이름을 입력하세요.' />\
+                        	   <label for='title'>일정</label><input type='text' class='form-control' name='title' placeholder='일정을 입력하세요.' />\
                         	   <label for='starttime'>시작일</label><input type='date' class='form-control' name='starttime' value='"+selectedDate+"' />\
                        		   <label for='endtime'>종료일</label><input type='date' class='form-control' name='endtime' value='"+selectedDate+"' />",
                         icon: "info",
@@ -208,16 +247,6 @@
                                 });
                             }
                             calendar.unselect()
-                        } else if (result.dismiss === "cancel") {
-                            Swal.fire({
-                                text: "일정을 추가하지 않습니다.",
-                                icon: "error",
-                                buttonsStyling: false,
-                                confirmButtonText: "확인",
-                                customClass: {
-                                    confirmButton: "btn btn-primary",
-                                }
-                            });
                         }
                     });
                 },
@@ -236,20 +265,36 @@
                         }
                     }).then(function (result) {
                         if (result.value) {
-                            arg.event.remove()
-                        } else if (result.dismiss === "cancel") {
-                            Swal.fire({
-                                text: "일정을 삭제하지 않습니다.",
-                                icon: "error",
-                                buttonsStyling: false,
-                                confirmButtonText: "확인",
-                                customClass: {
-                                    confirmButton: "btn btn-primary",
-                                }
-                            });
+                            var eventData = {
+                                    title: arg.event.title,
+                                    starttime: arg.event.start,
+                                    endtime: arg.event.end,
+                                    allDay: true
+                                };
+                        	fetch('/diary/monthly/delete-event', {
+                        		method: 'POST',
+                        		headers: {
+                        			'Content-Type': 'application/json'
+                        		},
+                        		body: JSON.stringify(eventData)
+                        	})
+                        	.then(function (response) {
+                        		if (response.ok) {
+                                    arg.event.remove();
+                                    Swal.fire({
+                                       text: "일정이 삭제되었습니다.",
+                                       icon: "success",
+                                       buttonsStyling: false,
+                                       confirmButtonText: "확인",
+                                       customClass: {
+                                         confirmButton: "btn btn-primary",
+                      		 	      }
+                        			});
+                        		}
+                  		  });
                         }
-                    });
-                },
+                    })
+               		 },
                 dayMaxEvents: true,
                 events: function (fetchInfo, successCallback, failureCallback) {
                     fetch('/diary/monthly/list-data')
@@ -358,7 +403,7 @@
 			</div>
 	    </div>
 	    <div class="col-md-10">
-	    	<h1 style="margin-bottom: 40px; margin-left: 5%; font-family: 'MBC1961GulimM';">MONTHLY<span class="badge">${freeboardPostCount}</span></h1>
+	    	<h1 style="margin-bottom: 40px; margin-left: 5%; font-family: 'MBC1961GulimM';">SCHEDULER<span class="badge">${freeboardPostCount}</span></h1>
 		    <div style="width:90%; margin-left: 5%;">
 				<div id='calendar'>
 				</div>

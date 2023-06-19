@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
 <script src="/webjars/jquery/jquery.min.js"></script>
 <script src="/webjars/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/js/sweetalert2.all.min.js"></script>
 <style type="text/css">
 	@font-face {
 	    font-family: 'GangwonEdu_OTFBoldA';
@@ -278,6 +279,28 @@
 	    </div>
 	</div>
 </div>
-
+<c:if test="${content.isEmpty()}">
+    <script>
+        const swalInstance = Swal.mixin({
+            toast: true,
+            position: 'middle',
+            showConfirmButton: false,
+            timer: 2000
+        });
+        
+        swalInstance.fire({
+            title: "댓글의 내용을 입력하세요.",
+            icon: "warning",
+            showClass: {
+                popup: 'swal2-noanimation',
+                backdrop: 'swal2-noanimation'
+            },
+            hideClass: {
+                popup: '',
+                backdrop: ''
+            }
+        });
+    </script>
+</c:if>
 </body>
 </html>

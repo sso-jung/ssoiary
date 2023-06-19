@@ -20,7 +20,7 @@ public class FreeboardReplyDTO {
     long id;
 	
 	@NotBlank
-	@Length(min = 1, max = 2000)
+	@Length(min = 2, max = 2000)
     String content;
 	
     Date day;

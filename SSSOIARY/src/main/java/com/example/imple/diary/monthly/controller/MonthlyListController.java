@@ -1,12 +1,11 @@
 package com.example.imple.diary.monthly.controller;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,14 +50,25 @@ public class MonthlyListController implements ListController{
     
     @PostMapping("/add-event")
     @Transactional
-    public ResponseEntity<Void> addEvent(@RequestBody Events events) {
-    	System.out.println(events);
-        int rowCount = eventsMapper.insertEvent(events);
+    public ResponseEntity<Void> addEvent(@AuthenticationPrincipal User user, @RequestBody Events events) {
+    	var writer = user.getUsername();
+        int rowCount = eventsMapper.insertEvent(events, writer);
         if (rowCount > 0) {
             return ResponseEntity.ok().build();
         } else {
-//             삽입 실패 시 예외 처리
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    } 
+    
+    @PostMapping("/delete-event")
+    @Transactional
+    public ResponseEntity<Void> deleteEvent(@RequestBody Events events) {
+    	System.out.println(events);
+    	int rowCount = eventsMapper.deleteEvent(events);
+    	if (rowCount > 0) {
+    		return ResponseEntity.ok().build();
+    	} else {
+    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    	}
     } 
 }

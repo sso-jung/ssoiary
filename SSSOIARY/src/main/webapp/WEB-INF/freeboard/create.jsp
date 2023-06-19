@@ -222,7 +222,7 @@ $(document).ready(function() {
 				</div>
 				<div class="mb-3">
 					<label class="form-label mb-2" for="content">내용</label>
-					<textarea class="form-control summernote" name="content" id="content" autocomplete="off"  style="text-align: left; height:600px;" placeholder="내용을 입력하세요.">${post.content}</textarea>
+					<textarea class="form-control summernote" name="content" id="content" autocomplete="off"  style="text-align: left; height:600px;" placeholder="내용을 입력하세요. (4000자까지 입력 가능)">${post.content}</textarea>
 				</div>
 				<button type="submit" class="btn" style="background:#4375DB; color:white;">작성 완료</button>
 			</form>	    	

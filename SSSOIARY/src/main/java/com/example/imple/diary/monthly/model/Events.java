@@ -16,4 +16,5 @@ public class Events {
     Date starttime;
     Date endtime;
     String allday;
+    String writer;
 }
