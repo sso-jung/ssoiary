@@ -135,15 +135,20 @@
 	    <h2 class="info" style="margin-bottom: 50px; margin-top: 50px;">비밀번호 변경</h2>
 		<form action="/member/update" method="post" style="width: 600px;">
 			<div class="mb-4 form-group">
-				<label class="form-lable mb-3" for="name">ID</label>
-				<input class="form-control"    id="name" name="name" value="${param.name}" disabled="disabled"/>
-				<input class="form-control"    id="name" name="name" value="${param.name}" type="hidden"/>
+				<label class="form-lable mb-3" for="id">ID</label>
+				<input class="form-control"    id="id" name="id" value="${id}" disabled="disabled"/>
+				<input class="form-control"    id="id" name="id" value="${id}" type="hidden"/>
 			</div>
 			<div class="mb-4 form-group">
 				<label class="form-lable mb-3" for="password">비밀번호</label>
 				<input class="form-control"    id="password"  name="password"  placeholder="변경할 비밀번호를 입력하세요." autocomplete="off" />
 			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
+			<div class="mb-4 form-group" style="display: none;">
+				<label class="form-lable mb-3" for="name">이름</label>
+				<input class="form-control"    id="name"  name="name"  value="${name}" disabled="disabled"/>
+				<input class="form-control"    id="name"  name="name"  value="${name}" type="hidden"/>
+			</div>
+			<button type="submit" class="btn btn-primary">변경하기</button>
 		</form>	
 	</div>
 </div>

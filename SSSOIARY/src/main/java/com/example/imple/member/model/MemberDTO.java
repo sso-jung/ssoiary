@@ -1,10 +1,13 @@
 package com.example.imple.member.model;
 
+import java.util.Date;
+
 import org.hibernate.validator.constraints.Length;
 
 import com.example.imple.grade.model.Grade;
 import com.example.standard.model.Modelable;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,24 +19,30 @@ import lombok.NonNull;
 @NoArgsConstructor
 @Builder
 public class MemberDTO implements Modelable<Member> {
-    Integer id;
+	@NotBlank
+    @Length(min = 4)
+    String id;
 
-    @NonNull
+    @NotBlank
     String name;
 
-    @NonNull
-    @Length(max = 100)
+    @NotBlank
+    @Length(min = 4)
     String password;
-
+    
     String roles;
+    
     Grade grade;
+    
+    Date joindate;
     
 	@Override
 	public Member getModel() {
 			
 		return Member.builder()
-					.id(10)
+					.id(id)
 					.name(name)
+					.roles("user")
 					.password(password)
 					.build();
 		

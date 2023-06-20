@@ -168,7 +168,7 @@
 	<div class="row d-flex flex-md-row">
 	    <div class="col-md-2 d-none d-md-flex flex-column align-items-center" style="padding-top: 50px;">
    			<h1 class="info" style="margin-top: 20px; margin-bottom: 50px; word-break: keep-all; text-align: center;">
-   				<sec:authentication property="name"/>님, 환영합니다.
+   				${name}님, 환영합니다.
    			</h1>
 			<div class="d-flex flex-row align-items-center">
 			<a href="/logout"><button class="btn" style="background: #E3E3E3;">로그아웃</button></a>

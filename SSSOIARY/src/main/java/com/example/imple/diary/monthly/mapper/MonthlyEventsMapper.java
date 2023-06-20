@@ -16,6 +16,9 @@ public interface MonthlyEventsMapper {
     @Select("select * from monthly_events")
     List<Events> selectAll();
     
+    @Select("select * from monthly_events where writer = #{writer}")
+    List<Events> selectAllByName(@Param("writer") String writer);
+    
     @Insert("""
     		insert into monthly_events (title, starttime, endtime, writer)
     		values (#{e.title}, #{e.starttime}, #{e.endtime}, #{writer})
@@ -23,7 +26,7 @@ public interface MonthlyEventsMapper {
     		""")
     int insertEvent(@Param("e") Events e, @Param("writer") String writer);
     
-    @Delete ("delete from monthly_events where title = #{e.title} and starttime = #{e.starttime, jdbcType=TIMESTAMP}")
-    int deleteEvent(@Param("e") Events e);
+    @Delete ("delete from monthly_events where title = #{e.title} and starttime >= TO_DATE(#{time}, 'YYYY-MM-DD')")
+    int deleteEvent(@Param("e") Events e, @Param("time") String time);
     
 }

@@ -36,9 +36,9 @@ public class MemberUpdateController implements UpdateController<MemberDTO> {
 			session.removeAttribute("binding");
 		}
 		
-		var name = request.getParameter("name");
-		if (Objects.nonNull(name)) {
-			var member = mapper.selectByName(name);
+		var id = request.getParameter("id");
+		if (Objects.nonNull(id)) {
+			var member = mapper.selectById(id);
 			model.addAttribute("member", member);
 		}
 	}
@@ -46,6 +46,8 @@ public class MemberUpdateController implements UpdateController<MemberDTO> {
 	@Override
 	public String update(@AuthenticationPrincipal User user, @Valid MemberDTO dto, BindingResult binding, Model model, HttpServletRequest request,
 			RedirectAttributes attr) {
+		var id = user.getUsername();	
+		var name = mapper.selectNameById(id);
 		var session = request.getSession();
 		session.setAttribute("member", dto);
 		session.setAttribute("binding", binding);
@@ -54,15 +56,14 @@ public class MemberUpdateController implements UpdateController<MemberDTO> {
 			return "redirect:/member/update?error";
 		
 		var member = dto.getModel();
-		
+		System.out.println("member = " + member);		
 		try {
 			mapper.updatePassword(member);
 		} catch (DataIntegrityViolationException e) {
 			return "redirect:/member/update?error";
 		}
 		
-		var name = user.getUsername();		
-		var list = mapper.selectMemberByName(name);
+		var list = mapper.selectMemberById(id);
 		int pwLength = list.getPassword().length();
 		String pwEncode = "*".repeat(pwLength);
 		session.setAttribute("pwEncode", pwEncode);

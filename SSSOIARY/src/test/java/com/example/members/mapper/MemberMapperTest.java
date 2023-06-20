@@ -20,7 +20,7 @@ public class MemberMapperTest {
 	
 	@Test
 	void selectById() {
-		var user = mapper.selectByName("박소정");
+		var user = mapper.selectById("박소정");
 		System.out.println(user);
 	}
 	

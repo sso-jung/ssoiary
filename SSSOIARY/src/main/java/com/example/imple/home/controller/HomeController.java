@@ -31,25 +31,14 @@ public class HomeController {
 	@GetMapping("/")
 	String home(@AuthenticationPrincipal User user, Model model, HttpServletRequest request) {
 		var session = request.getSession();
-		var name = user.getUsername();
+		var id = user.getUsername();
+		var name = memberMapper.selectNameById(id);
+		session.setAttribute("id", id);
 		session.setAttribute("name", name);
 		var gradeList = memberMapper.selectAll();
 		model.addAttribute("gradeList", gradeList);
 		
 		return "home";
 	}
-	
-    @GetMapping("/login")
-    void login() {
-    }
 
-    @PostMapping("/loginFail")
-    public void loginFail(Model model, HttpServletRequest request) {
-    	String errorMessage = null;
-        Exception exception = (Exception) request.getAttribute("exception");
-        if (exception instanceof BadCredentialsException) {
-            errorMessage = "자격 증명에 실패하였습니다.";
-        }
-       model.addAttribute("errorMessage", errorMessage);
-    }
 }

@@ -1,5 +1,7 @@
 package com.example.imple.member.model;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,10 +13,11 @@ import lombok.NonNull;
 @AllArgsConstructor(staticName = "of")
 @NoArgsConstructor
 public class Member {
-    @NonNull Integer id;
+    @NonNull String id;
     @NonNull String name;
     @NonNull String password;
     String roles;
+    Date joindate;
     Integer postCount;
     Integer replyCount;
     Integer point;

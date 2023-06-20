@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -133,14 +134,18 @@
 		    <span style="word-break: keep-all; overflow: hidden; text-overflow: ellipsis;">변경에 성공하였습니다.</span>
 		    </h2>
 		    <table class="table table-hover">
-				<tbody>
-					<tr><th>ID</th><td>${list.name}</td></tr>
+		    	<tbody>
+					<tr><th>ID</th><td>${list.id}</td></tr>
 					<tr>
 						<th>비밀번호</th>
 						<td>
 						<span style="margin-right: 20px;">${pwEncode}</span>
 						<a href="/member/update?name=${name}"><button class="btn btn-danger">변경</button></a>
 						</td>
+					</tr>
+					<tr><th>이름</th><td>${list.name}</td></tr>
+					<tr><th>가입일</th>
+						<td><fmt:formatDate value="${list.joindate}" pattern="yyyy년 MM월 dd일" /></td>
 					</tr>
 					<tr><th>회원 등급</th><td>${list.roles}</td></tr>
 					<tr><th>포인트</th><td>${list.point} pt</td></tr>

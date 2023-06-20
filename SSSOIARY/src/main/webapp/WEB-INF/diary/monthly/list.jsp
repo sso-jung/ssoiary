@@ -308,6 +308,7 @@
                                     title: event.title,
                                     start: event.starttime,
                                     end: event.endtime,
+                                    backgroundColor : "pink",
                                     allDay: true
                                 };
                             });
@@ -370,7 +371,7 @@
 	<div class="row d-flex flex-md-row">
 	    <div class="col-md-2 d-none d-md-flex flex-column align-items-center" style="padding-top: 50px;">
    			<h1 class="info" style="margin-top: 20px; margin-bottom: 50px; word-break: keep-all; text-align: center;">
-   				<sec:authentication property="name"/>님, 환영합니다.
+   				${name}님, 환영합니다.
    			</h1>
 			<div class="d-flex flex-row align-items-center">
 			<a href="/logout"><button class="btn" style="background: #E3E3E3;">로그아웃</button></a>
@@ -403,7 +404,15 @@
 			</div>
 	    </div>
 	    <div class="col-md-10">
-	    	<h1 style="margin-bottom: 40px; margin-left: 5%; font-family: 'MBC1961GulimM';">SCHEDULER<span class="badge">${freeboardPostCount}</span></h1>
+	    	<div style="margin-left: 6%; margin-bottom: 10px; font-family: 'omyu_pretty'; font-size: 1.8rem;">
+	    		<form action="#" method="post">
+	    			<c:forEach var="n" items="${memberName}">
+   				           <c:set var="checked" value="${n eq name ? 'checked' : ''}"/>
+         				   <label><input type="checkbox" name="${n}" value="${n}" ${checked}> ${n}</label>
+	    			</c:forEach>
+	    				<input class="btn" style="background: lavender; font-size: 1.8rem; padding: 0px; margin-left: 10px;" type="submit" value="검색">
+				</form>
+	    	</div>
 		    <div style="width:90%; margin-left: 5%;">
 				<div id='calendar'>
 				</div>

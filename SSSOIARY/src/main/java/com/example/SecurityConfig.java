@@ -36,18 +36,19 @@ public class SecurityConfig {
     		request.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
 	    		   .requestMatchers("/img/**", "/js/**", "/webjars/**").permitAll()
 	    		   .requestMatchers("/error").permitAll()
+	    		   .requestMatchers("/user/create", "/user/success").permitAll()
 	    		   .anyRequest().authenticated();
     	});
     	
     	http.formLogin(login -> {
-    		login.loginPage("/login")
+    		login.loginPage("/user/login")
 //    			 .defaultSuccessUrl("/",true)
     			 .successHandler((request, response, auth) -> {
 	    		 	response.sendRedirect("/");
 	    		 })
 	    		 .failureHandler((request, response, exception) -> {
 	    			request.setAttribute("exception", exception);
-	    			request.getRequestDispatcher("/loginFail").forward(request, response);
+	    			request.getRequestDispatcher("/user/loginFail").forward(request, response);
 	    		 })
 	    		 .permitAll();
     	});
@@ -55,9 +56,16 @@ public class SecurityConfig {
     	http.logout(logout -> {
     		logout.logoutUrl("/logout")
 	    		  .logoutSuccessHandler((request, response, auth) -> {
-	    			  response.sendRedirect("/login");
+	    			  response.sendRedirect("/user/login");
 	    	      })
 	    		  .permitAll();
+    	});
+    	
+    	http.rememberMe(remember -> {
+    		remember.rememberMeParameter("remember-me")
+    				.tokenValiditySeconds(7200)
+    				.alwaysRemember(false)
+    				.userDetailsService(dbMemberService);
     	});
     	
         http.userDetailsService(dbMemberService);

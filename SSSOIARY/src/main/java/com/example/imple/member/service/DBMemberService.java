@@ -20,13 +20,13 @@ public class DBMemberService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member member = memberMapper.selectByName(username);
+        Member member = memberMapper.selectById(username);
 
         if (member==null) 
             throw new UsernameNotFoundException(username + "는 존재하지 않는 이름입니다.");
 
         return User.builder()
-                   .username(member.getName())
+                   .username(member.getId())
                    .password(member.getPassword())
                    .roles(member.getRoles().split(","))
                    .build();
