@@ -1,8 +1,10 @@
 package com.example.imple.diary.monthly.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.imple.diary.monthly.mapper.MonthlyEventsMapper;
 import com.example.imple.diary.monthly.model.Events;
+import com.example.imple.member.color.mapper.MemberColorMapper;
+import com.example.imple.member.color.model.MemberColor;
 import com.example.imple.member.mapper.MemberMapper;
 import com.example.standard.controller.ListController;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,6 +37,9 @@ public class MonthlyListController implements ListController{
 	MemberMapper memberMapper;
 	
 	@Autowired
+	MemberColorMapper colorMapper;
+	
+	@Autowired
 	MonthlyEventsMapper eventsMapper;
 	
 	@Autowired
@@ -42,17 +49,48 @@ public class MonthlyListController implements ListController{
 	public void list(User user, Model model, HttpServletRequest request) {
 		var gradeList = memberMapper.selectAll();
 		model.addAttribute("gradeList", gradeList);
-		var memberName = memberMapper.selectMemberName();
-		model.addAttribute("memberName", memberName);
-		System.out.println(memberName);
+		var colors = colorMapper.selectAll();
+		model.addAttribute("colors", colors);
+		var session = request.getSession();
+		var name = session.getAttribute("name").toString();
+		var color = colorMapper.selectStringColorByName(name);
+		model.addAttribute("color", color);
 	}
     
     @GetMapping("/list-data")
     public ResponseEntity<List<Events>> listData(@AuthenticationPrincipal User user) {
     	var id = user.getUsername();
     	var name = memberMapper.selectNameById(id);
-        List<Events> events = eventsMapper.selectAllByName(name);
+        List<Events> events = eventsMapper.selectDistinctAllByName(name);
+        
+        for (Events event : events) {
+        	MemberColor color = colorMapper.selectColorByName(event.getWriter());
+        	if (color != null) {
+        		event.setColor(color.getColor());
+        	}
+        }
         return ResponseEntity.ok(events);
+    }
+    
+    @PostMapping("/selected-list-data")
+    public ResponseEntity<List<Events>> selectedListData(@AuthenticationPrincipal User user, @RequestBody Object data) {
+    	
+    	List<Events> selectEvents = new ArrayList<>();
+    	if (data instanceof List) {
+            List<String> dataList = (List<String>)data;
+            for (String writer : dataList) {
+                List<Events> events = eventsMapper.selectDistinctAllByName(writer);
+                for (Events event : events) {
+                    MemberColor color = colorMapper.selectColorByName(event.getWriter());
+                    if (color != null) {
+                        event.setColor(color.getColor());
+                    }
+                    selectEvents.add(event);
+                }
+            }
+        }
+    	
+		return ResponseEntity.ok(selectEvents);
     }
     
     @PostMapping("/add-event")

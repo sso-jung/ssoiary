@@ -151,6 +151,14 @@
 					<tr><th>포인트</th><td>${list.point} pt</td></tr>
 					<tr><th>랭크</th><td>${list.rank}</td></tr>
 					<tr><th>작성 글 수</th><td>${list.postCount} 개</td></tr>
+					<tr>
+						<th style="vertical-align: middle;"><span style="display: inline-block; vertical-align: middle;">Scheduler 색상</span></th>
+						<td style="vertical-align: middle;">
+						<span style="font-size: 80px; vertical-align: middle; color:${color.color};">■</span>
+						<br>
+						<a href="/member/color/update?id=${list.id}"><button class="btn" style="background: #D5D5D5;">색상 변경</button></a>
+						</td>
+					</tr>
 			</tbody>
 		    </table>
 	    </div>

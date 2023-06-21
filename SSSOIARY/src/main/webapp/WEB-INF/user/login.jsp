@@ -18,11 +18,11 @@
     <form action="/user/login" method="post">
         <div class="mb-3">
             <label class="form-lable mb-2" for="username">이름<span>*</span></label>
-            <input class="form-control"    id="username" name="username"  placeholder="username" value="${param.username}"/>
+            <input class="form-control"    id="username" name="username"  placeholder="username" autocomplete="off" value="${param.username}"/>
         </div>
         <div class="mb-3">
             <label class="form-lable mb-2" for="password">비밀번호<span>*</span></label>
-            <input class="form-control"    id="password"  name="password"  placeholder="password" value="${param.password}" type="password"/>
+            <input class="form-control"    id="password"  name="password"  placeholder="password" autocomplete="off" value="${param.password}" type="password"/>
         </div>
         <div class="form-check mb-3">
             <input class="form-check-input" type="checkbox" name="remember-me"> 

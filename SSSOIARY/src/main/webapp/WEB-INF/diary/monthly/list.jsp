@@ -113,12 +113,12 @@
  		background-color: #4375DB;
 	}
 	.fc-day-today {
-	  background-color: #FFE7F0	!important;
+	  background-color: #FAF8FF	!important;
 	  opacity: 1;
 	}
 	.fc-event {
-	  background-color: #A6A6A6;
-	  color: white;
+	  background-color: #FAF8FF;
+	  color: black;
 	  opacity: 1;
 	  height: 38px;
 	  border: none;
@@ -148,6 +148,12 @@
 		font-family: 'omyu_pretty';
 		font-size: 1.4rem;
 	  }
+	.fc-list{
+		font-family: 'omyu_pretty';
+		font-size: 1.4rem;
+		font-weight: 100;
+		background: #FBF9FF;
+	}
 	  /*month/week/day*/
 	  .fc-button{
 		  font-family: 'omyu_pretty'	!important;
@@ -165,28 +171,45 @@
                 headerToolbar: {
                     left: 'prevYear,prev,next,nextYear today',
                     center: 'title',
-                    right: 'dayGridMonth,dayGridWeek,dayGridDay'
+                    right: 'dayGridMonth,dayGridWeek,dayGridDay,list'
+                },
+                views: {
+                    list: {
+                        type: 'list',
+                        duration: { days: 30 },
+                        buttonText: 'to-do list',
+                        allDayText: ''
+                    }
                 },
                 selectable: true,
                 selectMirror: true,
                 navLinks: true,
                 editable: true,
+                buttonText: {
+                	month: 'monthly',
+                	week: 'weekly',
+                	day : 'daily'
+                },
                 
                 firstDay: 1,
                 titleFormat: function (date) {
-                	year = date.date.year;
-                	month = date.date.month + 1;
-                	
-                	return year + "년 " + month + "월";
+                	return date.date.year + "년 " + (date.date.month + 1) + "월";
+                },
+                listFormat: function (date) {
+                	return date.date.year + "년 " + (date.date.month + 1) + "월";
                 },
                 // Create new event
                 select: function (arg) {
-                	var selectedDate = arg.startStr;
+                	var selectedStartDate = arg.startStr;
+                	var selectedEndDate = arg.endStr;
+                	var endDate = new Date(selectedEndDate);
+                	endDate.setDate(endDate.getDate() - 1);
+                	var formattedEndDate = endDate.toISOString().split('T')[0];
                     Swal.fire({
                         html: "<div class='mb-7'>일정을 추가하시겠습니까?</div><div class='fw-bold mb-5'></div>\
                         	   <label for='title'>일정</label><input type='text' class='form-control' name='title' placeholder='일정을 입력하세요.' />\
-                        	   <label for='starttime'>시작일</label><input type='date' class='form-control' name='starttime' value='"+selectedDate+"' />\
-                       		   <label for='endtime'>종료일</label><input type='date' class='form-control' name='endtime' value='"+selectedDate+"' />",
+                        	   <label for='starttime'>시작일</label><input type='date' class='form-control' name='starttime' value='"+selectedStartDate+"' />\
+                       		   <label for='endtime'>종료일</label><input type='date' class='form-control' name='endtime' value='"+formattedEndDate+"' />",
                         icon: "info",
                         showCancelButton: true,
                         buttonsStyling: false,
@@ -252,6 +275,9 @@
                 },
 
                 eventClick: function (arg) {
+                	console.log(arg.event.backgroundColor);
+                	
+                	if (arg.event.backgroundColor === ${color}) {
                     Swal.fire({
                         text: "일정을 삭제하시겠습니까?",
                         icon: "warning",
@@ -294,10 +320,29 @@
                   		  });
                         }
                     })
+                    }
                		 },
                 dayMaxEvents: true,
                 events: function (fetchInfo, successCallback, failureCallback) {
-                    fetch('/diary/monthly/list-data')
+                	let url = '/diary/monthly/list-data';
+                    document.getElementById('selectButton').addEventListener('click', function(event) {
+                        event.preventDefault();
+
+                        url = '/diary/monthly/selected-list-data';
+
+                        const formData = new FormData(document.getElementById('checkForm'));
+                        const checked = [];
+                        for (let key of formData.keys()) {
+                            const value = formData.get(key);
+                            checked.push(value);
+                        }
+                        fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(checked)
+                        })
                         .then(function (response) {
                             return response.json();
                         })
@@ -308,20 +353,49 @@
                                     title: event.title,
                                     start: event.starttime,
                                     end: event.endtime,
-                                    backgroundColor : "pink",
-                                    allDay: true
+                                    allDay: true,
+                                    color: event.color,
                                 };
                             });
 
                             successCallback(events);
+                            calendar.setOption('events', events);
+                            calendar.refetchEvents();
+                            calendar.render();
                         })
                         .catch(function (error) {
-                            failureCallback(error);
+                        	failureCallback(error);
                         });
+                    });
+                    
+                       fetch(url)
+                           .then(function (response) {
+                               return response.json();
+                           })
+                           .then(function (data) {
+                               var events = data.map(function (event) {
+                                   var startTime = new Date(event.starttime);
+                                   return {
+                                       title: event.title,
+                                       start: event.starttime,
+                                       end: event.endtime,
+                                       allDay: true,
+                                       color: event.color,
+                                   };
+                               });
+
+                               successCallback(events);
+
+                           })
+                           .catch(function (error) {
+                           	failureCallback(error);
+                           });
                 },
+                
             });
 
             calendar.render();
+ 
         });
 
     </script>
@@ -369,51 +443,21 @@
 
 <div class="container-fluid">
 	<div class="row d-flex flex-md-row">
-	    <div class="col-md-2 d-none d-md-flex flex-column align-items-center" style="padding-top: 50px;">
-   			<h1 class="info" style="margin-top: 20px; margin-bottom: 50px; word-break: keep-all; text-align: center;">
-   				${name}님, 환영합니다.
-   			</h1>
-			<div class="d-flex flex-row align-items-center">
-			<a href="/logout"><button class="btn" style="background: #E3E3E3;">로그아웃</button></a>
-			<a href="/member/list"><button class="btn" style="margin-left: 10px; background:#FCE2EF;">내 정보</button></a>
-			</div>
-			<div style="padding-top: 80px; display:flex; flex-direction: column; align-items: center; justify-content: center;">
-		    <h1 class="info" style=" margin-bottom: 30px;">활동 랭킹</h1>
-		    <table class="table table-hover ranking" style="width:100%; table-layout: fixed;">
-    		<thead>
-				<tr>
-					<th>순위</th>
-					<th>이름</th>
-					<th>포인트</th>
-					<th>게시글 수</th>
-					<th>랭크</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="g" items="${gradeList}" varStatus="status">
-					<tr>
-						<td>${status.index + 1}</td>
-						<td>${g.name}</td>
-						<td>${g.point}</td>
-						<td>${g.postCount}</td>
-						<td>${g.rank}</td>
-					</tr>
-				</c:forEach>
-			</tbody>
-			</table>
-			</div>
-	    </div>
-	    <div class="col-md-10">
-	    	<div style="margin-left: 6%; margin-bottom: 10px; font-family: 'omyu_pretty'; font-size: 1.8rem;">
-	    		<form action="#" method="post">
-	    			<c:forEach var="n" items="${memberName}">
-   				           <c:set var="checked" value="${n eq name ? 'checked' : ''}"/>
-         				   <label><input type="checkbox" name="${n}" value="${n}" ${checked}> ${n}</label>
+	    <div style="padding-top: 40px; width: 75%;">
+	    	<div style="margin-left: 20%; margin-bottom: 20px; font-family: 'omyu_pretty'; font-size: 1.8rem; display: flex; ">
+	    		<form action="/diary/monthly/selected-list-data" method="post" id="checkForm">
+	    			<c:forEach var="c" items="${colors}">
+   				           <c:set var="checked" value="${c.name eq name ? 'checked' : ''}"/>
+         				   <label><input type="checkbox" name="${c.name}" value="${c.name}" ${checked}>
+         				   		  <span style="color:${c.color};"> ${c.name}</span></label>
 	    			</c:forEach>
-	    				<input class="btn" style="background: lavender; font-size: 1.8rem; padding: 0px; margin-left: 10px;" type="submit" value="검색">
+	    				<input class="btn" id="selectButton" style="background: #E3E3E3; font-size: 1.8rem; padding: 0px; margin-left: 10px;" type="submit" value="검색">
 				</form>
+	    				<a href="/member/color/update?id=${id}">
+	    					<button class="btn" style="background: lavender; font-size: 1.8rem; padding: 0px; margin-left: 15px;">색상 변경</button>
+	    				</a>
 	    	</div>
-		    <div style="width:90%; margin-left: 5%;">
+		    <div style="width:90%; margin-left: 20%;">
 				<div id='calendar'>
 				</div>
 		    </div>

@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.imple.grade.mapper.GradeMapper;
+import com.example.imple.member.color.mapper.MemberColorMapper;
 import com.example.imple.member.mapper.MemberMapper;
 import com.example.imple.member.model.MemberDTO;
 import com.example.standard.controller.CreateController;
+import com.example.standard.util.RandomColor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -29,6 +31,9 @@ public class UserCreateController implements CreateController<MemberDTO> {
 	
 	@Autowired
 	GradeMapper gradeMapper;
+	
+	@Autowired
+	MemberColorMapper colorMapper;
 
 	@Override
 	public void create(Model model, HttpServletRequest request) {
@@ -56,9 +61,13 @@ public class UserCreateController implements CreateController<MemberDTO> {
 		
 		var member = dto.getModel();
 		var name = member.getName();
+		
+		var color = new RandomColor().Generate();
+		
 		try {
 			memberMapper.insertMember(member, day);
 			gradeMapper.insertGrade(name);
+			colorMapper.insertColor(name, color);
 		} catch (DuplicateKeyException e) {
 			binding.reject("duplicate key", "아이디가 중복됩니다.");
 			return "redirect:/user/create?error";

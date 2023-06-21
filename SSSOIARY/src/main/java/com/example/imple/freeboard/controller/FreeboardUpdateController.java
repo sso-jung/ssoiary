@@ -80,8 +80,6 @@ public class FreeboardUpdateController implements UpdateController<FreeboardPost
 			return "redirect:/freeboard/update?error";
 		}
 		
-		
-		
 		return "redirect:/freeboard/detail/"+key+"?page="+pageNum;
 	}
 

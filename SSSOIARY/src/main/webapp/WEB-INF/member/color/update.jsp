@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,6 +50,15 @@
 		font-weight: lighter;
 		font-size: 40px;
 	}
+	a {
+		text-decoration: none;
+	}
+    @media (max-width: 768px) {
+        form[style*="width: 600px;"] {
+            width: 100% !important;
+            max-width: 100%;
+        }
+    }
 	h1.info {
 		font-family: 'GangwonEdu_OTFBoldA';
 	}
@@ -74,9 +85,6 @@
 	  .nav-item, .dropdown-item {
 	  	text-align: center;
 	  }
-	}
-	a {
-		text-decoration: none;
 	}
 </style>
 <title>SSOIARY</title>
@@ -123,47 +131,40 @@
 </nav>
 
 <div class="container-fluid">
-	<div class="row">
-	    <div class="col-sm-2">
-	    </div>
-	    <div class="col-sm-8" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: 50px;">
-		    <h2 class="info" style="margin-bottom: 50px; text-align: center;">
-			  <span style="word-break: keep-all; overflow: hidden; text-overflow: ellipsis;">${name}님의 계정정보입니다.</span>
-			</h2>
-		    <table class="table table-hover" style="width: 100%; display: table; table-layout: fixed;">
-				<tbody>
-					<tr><th>ID</th><td>${list.id}</td></tr>
-					<tr>
-						<th style="vertical-align: middle;">비밀번호</th>
-						<td style="vertical-align: middle;">
-						<span style="margin-right: 20px; vertical-align: middle;">${pwEncode}</span>
-						<a href="/member/update?id=${list.id}"><button class="btn btn-danger">변경</button></a>
-						</td>
-					</tr>
-					<tr><th>이름</th><td>${list.name}</td></tr>
-					<tr><th>가입일</th>
-						<td><fmt:formatDate value="${list.joindate}" pattern="yyyy년 MM월 dd일" /></td>
-					</tr>
-					<tr><th>회원 등급</th><td>${list.roles}</td></tr>
-					<tr><th>포인트</th><td>${list.point} pt</td></tr>
-					<tr><th>랭크</th><td>${list.rank}</td></tr>
-					<tr><th>작성 글 수</th><td>${list.postCount} 개</td></tr>
-					<tr>
-						<th style="vertical-align: middle;"><span style="display: inline-block; vertical-align: middle;">Scheduler 색상</span></th>
-						<td style="vertical-align: middle;">
-						<span style="font-size: 80px; vertical-align: middle; color:${color.color};">■</span>
-						<br>
-						<a href="/member/color/update?id=${list.id}"><button class="btn" style="background: #D5D5D5;">색상 변경</button></a>
-						</td>
-					</tr>
-			</tbody>
-		    </table>
-	    </div>
-	    <div class="col-sm-2">
-		</div>
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+	    <h2 class="info" style="margin-bottom: 50px; margin-top: 50px;">비밀번호 변경</h2>
+		<form action="/member/color/update" method="post" style="width: 600px;">
+			<div class="mb-4 form-group">
+				<label class="form-lable mb-3" for="id">ID</label>
+				<input class="form-control"    id="id" name="id" value="${id}" disabled="disabled"/>
+				<input class="form-control"    id="id" name="id" value="${id}" type="hidden"/>
+			</div>
+			<div class="mb-4 form-group">
+				<label class="form-lable mb-3" for="color">Scheduler 색상</label>
+				<input class="form-control"    id="color"  name="color" type="color" value="${color.color}" style="height: 100px;" />
+			</div>
+			<div class="mb-4 form-group" style="display: none;">
+				<label class="form-lable mb-3" for="name">이름</label>
+				<input class="form-control"    id="name"  name="name"  value="${name}" disabled="disabled"/>
+				<input class="form-control"    id="name"  name="name"  value="${name}" type="hidden"/>
+			</div>
+			<button type="submit" class="btn btn-primary">변경하기</button>
+		</form>	
 	</div>
 </div>
 </section>
+<hr>
+<c:if test="${binding.hasErrors()}">
+<h2>Error Massage</h2>
+<hr>
+<c:forEach var="g" items="${binding.globalErrors}">
+	<div>${g.code} ${g.defaultMessage}</div>
+</c:forEach>
+<hr>
+<c:forEach var="f" items="${binding.fieldErrors}">
+	<div>${f.field} ${f.defaultMessage}</div>
+</c:forEach>
 
+</c:if>
 </body>
 </html>

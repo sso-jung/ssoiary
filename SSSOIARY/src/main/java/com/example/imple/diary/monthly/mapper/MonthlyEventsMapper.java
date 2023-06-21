@@ -19,6 +19,15 @@ public interface MonthlyEventsMapper {
     @Select("select * from monthly_events where writer = #{writer}")
     List<Events> selectAllByName(@Param("writer") String writer);
     
+    @Select("select distinct * from monthly_events where writer = #{writer}")
+    List<Events> selectDistinctAllByName(@Param("writer") String writer);
+    
+    @Select("""
+    		select distinct * from monthly_events
+    		where writer in (#{writers})
+    		""")
+    List<Events> selectDistinctAllBySelectedNames (@Param("writers") String writers);
+    
     @Insert("""
     		insert into monthly_events (title, starttime, endtime, writer)
     		values (#{e.title}, #{e.starttime}, #{e.endtime}, #{writer})
