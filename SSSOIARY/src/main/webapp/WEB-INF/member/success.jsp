@@ -86,7 +86,7 @@
 </head>
 <body>
 
-<section>
+<section style="margin-bottom:100px;">
 <a href="/"><div class="container-fluid title">
 	<span style="margin-top: 13px;">SSOIARY.</span>
 </div></a>
@@ -110,11 +110,7 @@
           DIARY
         </a>
         <ul class="dropdown-menu" style="background: #E3E3E3;">
-          <li><a class="dropdown-item" href="/diary/monthly/list">MONTHLY</a></li>
-          <li><a class="dropdown-item" href="#">WEEKLY</a></li>
-          <li><a class="dropdown-item" href="#">DAILY</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="#">EVERYONE</a></li>
+          <li><a class="dropdown-item" href="/diary/monthly/list">SCHEDULER</a></li>
         </ul>
       <li class="nav-item" style="width:250px;">
         <a class="nav-link active" aria-current="page" href="/game/list" style="color: white;">GAME</a>

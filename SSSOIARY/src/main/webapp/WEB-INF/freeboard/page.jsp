@@ -149,11 +149,7 @@
           DIARY
         </a>
         <ul class="dropdown-menu" style="background: #E3E3E3;">
-          <li><a class="dropdown-item" href="/diary/monthly/list">MONTHLY</a></li>
-          <li><a class="dropdown-item" href="#">WEEKLY</a></li>
-          <li><a class="dropdown-item" href="#">DAILY</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="#">EVERYONE</a></li>
+          <li><a class="dropdown-item" href="/diary/monthly/list">SCHEDULER</a></li>
         </ul>
       <li class="nav-item" style="width:250px;">
         <a class="nav-link active" aria-current="page" href="/game/list" style="color: white;">GAME</a>
@@ -164,9 +160,9 @@
   </div>
 </nav>
 
-<div class="container-fluid">
+<div class="container-fluid" style="margin-bottom:100px;">
 	<div class="row d-flex flex-md-row">
-	    <div class="col-md-2 d-none d-md-flex flex-column align-items-center" style="padding-top: 50px;">
+	    <div class="col-md-3 d-none d-md-flex flex-column align-items-center" style="padding-top: 50px;">
    			<h1 class="info" style="margin-top: 20px; margin-bottom: 50px; word-break: keep-all; text-align: center;">
    				${name}님, 환영합니다.
    			</h1>
@@ -200,8 +196,8 @@
 			</table>
 			</div>
 	    </div>
-	    <div class="col-md-10">
-	    	<h1 style="margin-bottom: 40px; margin-left: 5%; font-family: 'MBC1961GulimM';">자유게시판<span class="badge">${freeboardPostCount}</span></h1>
+	    <div class="col-md-9">
+	    	<h1 style="margin-bottom: 40px; margin-top: 50px; margin-left: 5%; font-family: 'MBC1961GulimM';">자유게시판<span class="badge">${freeboardPostCount}</span></h1>
 	    	
 	    		<table class="table table-hover board" style="margin-bottom: 0px; width:100%; table-layout: fixed;">
 				<thead>

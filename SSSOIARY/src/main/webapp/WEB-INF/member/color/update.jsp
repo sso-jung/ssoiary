@@ -91,7 +91,7 @@
 </head>
 <body>
 
-<section>
+<section style="margin-bottom:100px;">
 <a href="/"><div class="container-fluid title">
 	<span style="margin-top: 13px;">SSOIARY.</span>
 </div></a>
@@ -115,11 +115,7 @@
           DIARY
         </a>
         <ul class="dropdown-menu" style="background: #E3E3E3;">
-          <li><a class="dropdown-item" href="/diary/monthly/list">MONTHLY</a></li>
-          <li><a class="dropdown-item" href="#">WEEKLY</a></li>
-          <li><a class="dropdown-item" href="#">DAILY</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="#">EVERYONE</a></li>
+          <li><a class="dropdown-item" href="/diary/monthly/list">SCHEDULER</a></li>
         </ul>
       <li class="nav-item" style="width:250px;">
         <a class="nav-link active" aria-current="page" href="/game/list" style="color: white;">GAME</a>
@@ -132,7 +128,7 @@
 
 <div class="container-fluid">
     <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-	    <h2 class="info" style="margin-bottom: 50px; margin-top: 50px;">비밀번호 변경</h2>
+	    <h2 class="info" style="margin-bottom: 50px; margin-top: 50px;">Scheduler 색상 변경</h2>
 		<form action="/member/color/update" method="post" style="width: 600px;">
 			<div class="mb-4 form-group">
 				<label class="form-lable mb-3" for="id">ID</label>

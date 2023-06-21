@@ -275,52 +275,61 @@
                 },
 
                 eventClick: function (arg) {
-                	console.log(arg.event.backgroundColor);
+                	var xhr = new XMLHttpRequest();
+                	xhr.open('GET','/diary/monthly/get-color')
                 	
-                	if (arg.event.backgroundColor === ${color}) {
-                    Swal.fire({
-                        text: "일정을 삭제하시겠습니까?",
-                        icon: "warning",
-                        showCancelButton: true,
-                        buttonsStyling: false,
-                        confirmButtonText: "삭제",
-                        cancelButtonText: "취소",
-                        customClass: {
-                            confirmButton: "btn btn-primary",
-                            cancelButton: "btn btn-danger"
-                        }
-                    }).then(function (result) {
-                        if (result.value) {
-                            var eventData = {
-                                    title: arg.event.title,
-                                    starttime: arg.event.start,
-                                    endtime: arg.event.end,
-                                    allDay: true
-                                };
-                        	fetch('/diary/monthly/delete-event', {
-                        		method: 'POST',
-                        		headers: {
-                        			'Content-Type': 'application/json'
-                        		},
-                        		body: JSON.stringify(eventData)
-                        	})
-                        	.then(function (response) {
-                        		if (response.ok) {
-                                    arg.event.remove();
-                                    Swal.fire({
-                                       text: "일정이 삭제되었습니다.",
-                                       icon: "success",
-                                       buttonsStyling: false,
-                                       confirmButtonText: "확인",
-                                       customClass: {
-                                         confirmButton: "btn btn-primary",
-                      		 	      }
-                        			});
-                        		}
-                  		  });
-                        }
-                    })
-                    }
+                	xhr.onreadystatechange = function() {
+				    if (xhr.readyState === 4 && xhr.status === 200) {
+				      var color = xhr.responseText;
+				      if (arg.event.backgroundColor === color) {
+		                    Swal.fire({
+		                        text: "일정을 삭제하시겠습니까?",
+		                        icon: "warning",
+		                        showCancelButton: true,
+		                        buttonsStyling: false,
+		                        confirmButtonText: "삭제",
+		                        cancelButtonText: "취소",
+		                        customClass: {
+		                            confirmButton: "btn btn-primary",
+		                            cancelButton: "btn btn-danger"
+		                        }
+		                    }).then(function (result) {
+		                        if (result.value) {
+		                            var eventData = {
+		                                    title: arg.event.title,
+		                                    starttime: arg.event.start,
+		                                    endtime: arg.event.end,
+		                                    allDay: true
+		                                };
+		                        	fetch('/diary/monthly/delete-event', {
+		                        		method: 'POST',
+		                        		headers: {
+		                        			'Content-Type': 'application/json'
+		                        		},
+		                        		body: JSON.stringify(eventData)
+		                        	})
+		                        	.then(function (response) {
+		                        		if (response.ok) {
+		                                    arg.event.remove();
+		                                    Swal.fire({
+		                                       text: "일정이 삭제되었습니다.",
+		                                       icon: "success",
+		                                       buttonsStyling: false,
+		                                       confirmButtonText: "확인",
+		                                       customClass: {
+		                                         confirmButton: "btn btn-primary",
+		                      		 	      }
+		                        			});
+		                        		}
+		                  		  });
+		                        }
+		                    })
+				      }
+				    }
+				  };
+				  
+				  xhr.send();
+
                		 },
                 dayMaxEvents: true,
                 events: function (fetchInfo, successCallback, failureCallback) {
@@ -426,11 +435,7 @@
           DIARY
         </a>
         <ul class="dropdown-menu" style="background: #E3E3E3;">
-          <li><a class="dropdown-item" href="/diary/monthly/list" style="background:#FFE8F3;">MONTHLY</a></li>
-          <li><a class="dropdown-item" href="#">WEEKLY</a></li>
-          <li><a class="dropdown-item" href="#">DAILY</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="#">EVERYONE</a></li>
+          <li><a class="dropdown-item" href="/diary/monthly/list" style="background:#FFE8F3;">SCHEDULER</a></li>
         </ul>
       <li class="nav-item" style="width:250px;">
         <a class="nav-link active" aria-current="page" href="/game/list" style="color: white;">GAME</a>
@@ -441,7 +446,7 @@
   </div>
 </nav>
 
-<div class="container-fluid">
+<div class="container-fluid" style="margin-bottom: 100px;">
 	<div class="row d-flex flex-md-row">
 	    <div style="padding-top: 40px; width: 75%;">
 	    	<div style="margin-left: 20%; margin-bottom: 20px; font-family: 'omyu_pretty'; font-size: 1.8rem; display: flex; ">

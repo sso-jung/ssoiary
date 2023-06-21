@@ -111,11 +111,7 @@
           DIARY
         </a>
         <ul class="dropdown-menu" style="background: #E3E3E3;">
-          <li><a class="dropdown-item" href="/diary/monthly/list">MONTHLY</a></li>
-          <li><a class="dropdown-item" href="#">WEEKLY</a></li>
-          <li><a class="dropdown-item" href="#">DAILY</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="#">EVERYONE</a></li>
+          <li><a class="dropdown-item" href="/diary/monthly/list">SCHEDULER</a></li>
         </ul>
       <li class="nav-item" style="width:250px;">
         <a class="nav-link active" aria-current="page" href="/game/list" style="color: white;">GAME</a>
@@ -128,7 +124,7 @@
 
 <div class="container-fluid">
 	<div class="row d-flex flex-md-row">
-	    <div class="col-md-2" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: 50px;">
+	    <div class="col-md-3" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: 50px;">
    			<h1 class="info" style="margin-top: 20px; margin-bottom: 50px; word-break: keep-all; text-align: center;">
    				${name}님, 환영합니다.
    			</h1>
@@ -162,7 +158,7 @@
 			</table>
 			</div>
 	    </div>
-	    <div class="col-md-10">
+	    <div class="col-md-9">
 	    <h1 style="background:lavender;">하이 아직 홈화면 안꾸밈</h1>
 	    </div>
 	</div>

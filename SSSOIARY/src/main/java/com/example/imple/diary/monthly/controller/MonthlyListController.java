@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.imple.diary.monthly.mapper.MonthlyEventsMapper;
 import com.example.imple.diary.monthly.model.Events;
@@ -51,10 +53,16 @@ public class MonthlyListController implements ListController{
 		model.addAttribute("gradeList", gradeList);
 		var colors = colorMapper.selectAll();
 		model.addAttribute("colors", colors);
+	}
+	
+	@GetMapping("/get-color")
+	@ResponseBody
+	public String getColor(@AuthenticationPrincipal User user, HttpServletRequest request, Model model) {
 		var session = request.getSession();
 		var name = session.getAttribute("name").toString();
 		var color = colorMapper.selectStringColorByName(name);
-		model.addAttribute("color", color);
+		String response = color;
+	    return response;
 	}
     
     @GetMapping("/list-data")

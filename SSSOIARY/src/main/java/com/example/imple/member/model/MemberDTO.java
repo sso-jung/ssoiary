@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 import com.example.imple.grade.model.Grade;
 import com.example.standard.model.Modelable;
 
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,9 +22,11 @@ import lombok.NonNull;
 public class MemberDTO implements Modelable<Member> {
 	@NotBlank
     @Length(min = 4)
+	@Id
     String id;
 
     @NotBlank
+    @Id
     String name;
 
     @NotBlank

@@ -150,11 +150,7 @@ $(document).ready(function() {
           DIARY
         </a>
         <ul class="dropdown-menu" style="background: #E3E3E3;">
-          <li><a class="dropdown-item" href="/diary/monthly/list">MONTHLY</a></li>
-          <li><a class="dropdown-item" href="#">WEEKLY</a></li>
-          <li><a class="dropdown-item" href="#">DAILY</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="#">EVERYONE</a></li>
+          <li><a class="dropdown-item" href="/diary/monthly/list">SCHEDULER</a></li>
         </ul>
       <li class="nav-item" style="width:250px;">
         <a class="nav-link active" aria-current="page" href="/game/list" style="color: white;">GAME</a>
@@ -164,9 +160,9 @@ $(document).ready(function() {
   </div>
   </div>
 </nav>
-<div class="container-fluid">
+<div class="container-fluid" style="margin-bottom:100px;">
 	<div class="row d-flex flex-md-row">
-	    <div class="col-md-2 d-none d-md-flex flex-column align-items-center" style="padding-top: 50px;">
+	    <div class="col-md-3 d-none d-md-flex flex-column align-items-center" style="padding-top: 50px;">
    			<h1 class="info" style="margin-top: 20px; margin-bottom: 50px; word-break: keep-all; text-align: center;">
    				${name}님, 환영합니다.
    			</h1>
@@ -200,8 +196,8 @@ $(document).ready(function() {
 			</table>
 			</div>
 	    </div>
-	    <div class="col-md-10">
-	    	<h1 style="margin-bottom: 40px; margin-left: 5%; font-family: 'MBC1961GulimM';">게시글 작성</h1>
+	    <div class="col-md-9">
+	    	<h1 style="margin-bottom: 40px; margin-top: 50px; margin-left: 5%; font-family: 'MBC1961GulimM';">게시글 작성</h1>
 			<form action="/freeboard/update?id=${param.id}&page=${param.page}" method="post">
 				<div class="mb-3">
 					<label class="form-label mb-2" for="title">제목</label>
