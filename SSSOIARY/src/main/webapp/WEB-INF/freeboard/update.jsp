@@ -15,8 +15,8 @@
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 <script src="/webjars/jquery/jquery.min.js"></script>
 <script src="/webjars/bootstrap/js/bootstrap.bundle.min.js"></script>
-<link href="/webjars/summernote/0.8.20/dist/summernote-bs5.min.css" rel="stylesheet">
-<script src="/webjars/summernote/0.8.20/dist/summernote-bs5.min.js"></script>
+<link href="/webjars/summernote/0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="/webjars/summernote/0.8.20/dist/summernote-lite.min.js"></script>
 <style type="text/css">
 	@font-face {
 	    font-family: 'GangwonEdu_OTFBoldA';

@@ -35,6 +35,7 @@ public class SecurityConfig {
     	http.authorizeHttpRequests(request -> {
     		request.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
 	    		   .requestMatchers("/img/**", "/js/**", "/webjars/**").permitAll()
+	    		   .requestMatchers("/summernote_image/**").permitAll()
 	    		   .requestMatchers("/error").permitAll()
 	    		   .requestMatchers("/user/create", "/user/success").permitAll()
 	    		   .anyRequest().authenticated();

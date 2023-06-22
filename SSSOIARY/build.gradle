@@ -72,8 +72,10 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.webjars/sweetalert
 	implementation 'org.webjars:sweetalert:2.1.0'
 
-	
-    
+	// https://mvnrepository.com/artifact/commons-io/commons-io
+	implementation 'commons-io:commons-io:2.13.0'
+	// https://mvnrepository.com/artifact/com.google.code.gson/gson
+	implementation 'com.google.code.gson:gson:2.10.1'
     
 }
 

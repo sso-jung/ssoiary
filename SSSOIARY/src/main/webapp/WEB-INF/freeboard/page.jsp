@@ -197,7 +197,7 @@
 			</div>
 	    </div>
 	    <div class="col-md-9">
-	    	<h1 style="margin-bottom: 40px; margin-top: 50px; margin-left: 5%; font-family: 'MBC1961GulimM';">자유게시판<span class="badge">${freeboardPostCount}</span></h1>
+	    	<h1 style="margin-bottom: 40px; margin-top: 50px; margin-left: 5%; font-family: 'MBC1961GulimM';">자유게시판<span class="badge">${postCount}</span></h1>
 	    	
 	    		<table class="table table-hover board" style="margin-bottom: 0px; width:100%; table-layout: fixed;">
 				<thead>

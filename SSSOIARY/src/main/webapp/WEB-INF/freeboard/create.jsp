@@ -15,8 +15,8 @@
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 <script src="/webjars/jquery/jquery.min.js"></script>
 <script src="/webjars/bootstrap/js/bootstrap.bundle.min.js"></script>
-<link href="/webjars/summernote/0.8.20/dist/summernote-bs5.min.css" rel="stylesheet">
-<script src="/webjars/summernote/0.8.20/dist/summernote-bs5.min.js"></script>
+<link href="/webjars/summernote/0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="/webjars/summernote/0.8.20/dist/summernote-lite.min.js"></script>
 <style type="text/css">
 	@font-face {
 	    font-family: 'GangwonEdu_OTFBoldA';
@@ -116,13 +116,48 @@ $(document).ready(function() {
 	  	  ['insert', ['picture', 'link', 'video']],
 	  	  ['misc', ['undo', 'redo', 'codeview']],
 	  	],
-	  	fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체','GangwonEdu_OTFBoldA','MBC1961GulimM'],
-		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
-	    colors: [
-	        ['#000000', '#ffffff', '#ff0000', '#00ff00', '#0000ff', '#ffff00', '#00ffff', '#ff00ff', '#000000'],
-	      ],
+	  	fontNames: ['Arial', 'Arial Black'],
+	  	fontSizes: ['8', '9', '10', '12', '14', '16', '20', '32', '64'],
+	    placeholder: '최대 4000자까지 입력 가능합니다',
+	    callbacks : { 
+        	onImageUpload : function(files, editor) {
+	        for (var i = files.length - 1; i >= 0; i--) {
+		        uploadSummernoteImageFile(files[i],
+		        this);
+    		}
+        	}
+        },
+			onPaste: function (e) {
+				var clipboardData = e.originalEvent.clipboardData;
+				if (clipboardData && clipboardData.items && clipboardData.items.length) {
+					var item = clipboardData.items[0];
+					if (item.kind === 'file' && item.type.indexOf('image/') !== -1) {
+						e.preventDefault();
+					}
+				}
+			}
 	  });
 	});
+	
+	function uploadSummernoteImageFile(file, editor) {
+	    var data = new FormData();
+	    data.append("file", file);
+	    fetch('/freeboard/uploadImage', {
+	        method: 'POST',
+	        body: data
+	    })
+	    .then(function (response) {
+	        if (!response.ok) {
+	            throw new Error('Error: ' + response.status);
+	        }
+	        console.log("response ok")
+	        return response.json();
+	    })
+	    .then(function (data) {
+	    	console.log(data);
+	        $(editor).summernote('insertImage', data.url);
+	    });
+	}
 </script>
 <title>SSOIARY</title>
 </head>
