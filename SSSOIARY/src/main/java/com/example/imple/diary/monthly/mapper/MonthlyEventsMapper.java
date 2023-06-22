@@ -1,5 +1,6 @@
 package com.example.imple.diary.monthly.mapper;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
@@ -15,6 +16,23 @@ public interface MonthlyEventsMapper {
 
     @Select("select * from monthly_events")
     List<Events> selectAll();
+    
+    @Select("""
+			select * from 
+			(select * from monthly_events
+			where writer = #{writer}
+			and starttime >= TO_DATE(#{date}, 'YYYY-MM-DD')
+			order by starttime asc)
+			where rownum <= 10
+    		""")
+    List<Events> selectOnly10(@Param("writer") String writer, @Param("date") String date);
+    
+    @Select("""
+			select count(*) from monthly_events
+			where writer = #{writer}
+			and starttime >= TO_DATE(#{date}, 'YYYY-MM-DD')
+    		""")
+    int CountByWriterAfterDate(@Param("writer") String writer, @Param("date") String date);
     
     @Select("select * from monthly_events where writer = #{writer}")
     List<Events> selectAllByName(@Param("writer") String writer);

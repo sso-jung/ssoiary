@@ -37,6 +37,12 @@
 	    font-weight: normal;
 	    font-style: normal;
 	}
+	.ssoiary {
+		color: white;
+		background: linear-gradient(137deg, #FFE08C, #FFD9EC, #B2CCFF, #BCE067);
+	    color: transparent;
+	    -webkit-background-clip: text;
+	}	
 	.header {
 		margin-top: 20px;
 		height: 150px;
@@ -413,12 +419,11 @@
 <body>
 
 <a href="/"><div class="container-fluid header">
-	<span style="margin-top: 13px;">SSOIARY.</span>
+	<span style="margin-top: 13px;" class="ssoiary">SSOIARY.</span>
 </div></a>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark justify-content-center">
 	<div class="container">
-  <h2 class="navbar-text" style="color:white; font-weight: bold; margin-right: 50px; margin-top: 10px;">CATEGORY</h2>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
       </button>

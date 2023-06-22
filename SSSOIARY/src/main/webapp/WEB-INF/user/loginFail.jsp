@@ -30,11 +30,26 @@
 	    font-weight: normal;
 	    font-style: normal;
 	}
+	body {
+		background: linear-gradient(137deg, #FAECC5, #FFEAF3, #ECEBFF, #E4F7BA);
+		background-size: 800% 800%;
+		animation: gradi 13s ease infinite;
+	}
+	.ssoiary {
+		color: white;
+		background: linear-gradient(137deg, #FFE08C, #FFD9EC, #B2CCFF, #BCE067);
+	    color: transparent;
+	    -webkit-background-clip: text;
+	}
+	@keyframes gradi {
+	    0%{background-position:0% 50%}
+  	 	50%{background-position:100% 50%}
+    	100%{background-position:0% 50%}
+	}	
 	.title {
 		margin-top: 20px;
 		height: 150px;
 		background: black;
-		color: white;
 		font-family: 'MBC1961GulimM';
 		font-size: 75px;
 		font-weight: bolder;
@@ -99,10 +114,15 @@
 
 <section>
 <a href="/"><div class="container-fluid title">
-	<span style="margin-top: 13px;">SSOIARY.</span>
+	<span style="margin-top: 13px;" class="ssoiary">SSOIARY.</span>
 </div></a>
 <div class="container">
-<h1 style="margin-bottom: 40px; margin-left: 5%; margin-top: 100px; font-family: 'MBC1961GulimM';">로그인</h1>
+<div style="display: flex;">
+	<h1 style="margin-bottom: 40px; margin-left: 5%; margin-top: 100px; font-family: 'MBC1961GulimM';">로그인</h1>
+	<c:if test="${exception != null}">
+		<h2 style="margin-left: 40px; margin-top: 107px; font-family: 'MBC1961GulimM'; color: #DB0000;">계정 정보가 일치하지 않습니다.</h2>
+	</c:if>
+</div>
 	    <form action="/user/login" method="post">
         <div class="mb-3">
             <label class="form-lable mb-2" for="username">이름<span>*</span></label>
@@ -119,16 +139,11 @@
             <button type="submit" class="btn btn-primary">로그인하기</button>
         <a href="/user/create" class="btn btn-secondary">회원가입</a>
     </form> 
-    <div>
-    <a href="/user/findPassword">forgot password?</a>
-    </div>
+<!--     <div style="margin-top:5px;"> -->
+<!--     <a href="/user/findPassword">비밀번호를 잊으셨나요?</a> -->
+<!--     </div> -->
 </div>
-
-<hr>
-<c:if test="${exception != null}">
-<h2>${exception.message}</h2>
 </section>
-</c:if>
 </body>
 </html>
 

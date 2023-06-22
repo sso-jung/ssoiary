@@ -32,6 +32,9 @@
 	    font-weight: normal;
 	    font-style: normal;
 	}
+	.col-md-3, .col-md-6 {
+		border-right: 1px solid lightgray;
+	}	
 	.header {
 		margin-top: 20px;
 		height: 150px;
@@ -44,8 +47,15 @@
 		justify-content: center;
 		align-items: center;
 	}
+	.ssoiary {
+		color: white;
+		background: linear-gradient(137deg, #FFE08C, #FFD9EC, #B2CCFF, #BCE067);
+	    color: transparent;
+	    -webkit-background-clip: text;
+	}
 	a {
 		text-decoration: none;
+		color: black;
 	}
 	h1.info {
 		font-family: 'GangwonEdu_OTFBoldA';
@@ -89,12 +99,12 @@
 <body>
 
 <a href="/"><div class="container-fluid header">
-	<span style="margin-top: 13px;">SSOIARY.</span>
+	<span style="margin-top: 13px;" class="ssoiary">SSOIARY.</span>
 </div></a>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark justify-content-center">
 	<div class="container">
-  <h2 class="navbar-text" style="color:white; font-weight: bold; margin-right: 50px; margin-top: 10px;">CATEGORY</h2>
+  <h2 class="navbar-text" style="color:white; font-weight: bold; margin-right: 50px; margin-top: 10px;"></h2>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
       </button>
@@ -158,11 +168,64 @@
 			</table>
 			</div>
 	    </div>
-	    <div class="col-md-9">
-	    <h1 style="background:lavender;">하이 아직 홈화면 안꾸밈</h1>
+	    <div class="col-md-6" style="padding-top: 70px;">
+	    	<h2 style="margin-bottom: 40px; font-family: 'MBC1961GulimM'; margin-left: 2%;">최근 게시글 (10개)</h2>
+	    		<div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+	    		<table class="table table-hover board" style="margin-bottom: 0px; width:100%; table-layout: fixed;">
+				<thead>
+					<tr>
+						<th style="width: 20%;">글번호</th>
+						<th style="width: 40%;">제목</th>
+						<th style="width: 20%;">작성자</th>
+						<th style="width: 20%;">작성일</th>
+					</tr>
+				</thead>
+				<tbody>
+				<c:forEach var="p" items="${postList}">
+					<tr>
+						<td>${p.id}</td>
+						<td><a href="/freeboard/detail/${p.id}?page=${paging.pageNum}">${p.title}</a></td>
+						<td>${p.writer}</td>
+						<td><fmt:formatDate pattern="yy-MM-dd" value="${p.day}"/></td>
+					</tr>
+					<c:if test="${!empty blankCount}">
+					</c:if>
+				</c:forEach>
+					<c:forEach var="i" begin="1" end="${blankCount}">
+						<tr><td colspan=4>　</td></tr>
+					</c:forEach>
+				</tbody>
+			</table>
+			</div>
+			<div style="display: flex; justify-content: flex-end;">
+				<a href="/freeboard/page/1/10" class="btn-sm" style="background:#E3E3E3; margin-top: 10px; font-family:'omyu_pretty'; padding:5px;" >더보기</a>
+			</div>
+	    </div>
+	    <div class="col-md-3" style="padding-top: 70px;">
+	    	<h2 style="margin-bottom: 40px; font-family: 'MBC1961GulimM'; margin-left: 2%;">TO-DO LIST</h2>
+	    		<div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+	    		<table class="table board" style="margin-bottom: 0px; width:100%; table-layout: fixed;">
+	    		<thead>
+	    			<th>날짜</th>
+	    			<th>일정</th>
+	    		</thead>
+				<tbody>
+				<c:forEach var="e" items="${eventsList}">
+					<tr>
+						<td><fmt:formatDate pattern="yyyy년 MM월 dd일" value="${e.starttime}"/></td>
+						<td>${e.title}</td>
+					</tr>
+					<c:if test="${!empty blankCount}">
+					</c:if>
+				</c:forEach>
+					<c:forEach var="i" begin="1" end="${eventBlankCount}">
+						<tr><td colspan="2">　</td></tr>
+					</c:forEach>
+				</tbody>
+			</table>
+			</div>
 	    </div>
 	</div>
 </div>
-
 </body>
 </html>

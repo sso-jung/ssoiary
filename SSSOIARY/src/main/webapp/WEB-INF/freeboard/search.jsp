@@ -33,6 +33,12 @@
 	    font-weight: normal;
 	    font-style: normal;
 	}
+	.ssoiary {
+		color: white;
+		background: linear-gradient(137deg, #FFE08C, #FFD9EC, #B2CCFF, #BCE067);
+	    color: transparent;
+	    -webkit-background-clip: text;
+	}	
 	.header {
 		margin-top: 20px;
 		height: 150px;
@@ -49,7 +55,7 @@
 		text-decoration: none;
 		color: black;
 	}
-	.col-md-2 {
+	.col-md-3 {
 		border-right: 1px solid lightgray;
 	}
 	th {
@@ -127,12 +133,11 @@
 <body>
 
 <a href="/"><div class="container-fluid header">
-	<span style="margin-top: 13px;">SSOIARY.</span>
+	<span style="margin-top: 13px;" class="ssoiary">SSOIARY.</span>
 </div></a>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark justify-content-center">
 	<div class="container">
-  <h2 class="navbar-text" style="color:white; font-weight: bold; margin-right: 50px; margin-top: 10px;">CATEGORY</h2>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
       </button>
@@ -160,43 +165,9 @@
   </div>
 </nav>
 
-<div class="container-fluid" style="margin-bottom:100px;">
+<div class="container" style="margin-bottom:100px;">
 	<div class="row d-flex flex-md-row">
-	    <div class="col-md-3 d-none d-md-flex flex-column align-items-center" style="padding-top: 50px;">
-   			<h1 class="info" style="margin-top: 20px; margin-bottom: 50px; word-break: keep-all; text-align: center;">
-   				${name}님, 환영합니다.
-   			</h1>
-			<div class="d-flex flex-row align-items-center">
-			<a href="/logout"><button class="btn" style="background: #E3E3E3;">로그아웃</button></a>
-			<a href="/member/list"><button class="btn" style="margin-left: 10px; background:#FCE2EF;">내 정보</button></a>
-			</div>
-			<div style="padding-top: 80px; display:flex; flex-direction: column; align-items: center; justify-content: center;">
-		    <h1 class="info" style=" margin-bottom: 30px;">활동 랭킹</h1>
-		    <table class="table table-hover ranking" style="width:100%; table-layout: fixed;">
-    		<thead>
-				<tr>
-					<th>순위</th>
-					<th>이름</th>
-					<th>포인트</th>
-					<th>게시글 수</th>
-					<th>랭크</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="g" items="${gradeList}" varStatus="status">
-					<tr>
-						<td>${status.index + 1}</td>
-						<td>${g.name}</td>
-						<td>${g.point}</td>
-						<td>${g.postCount}</td>
-						<td>${g.rank}</td>
-					</tr>
-				</c:forEach>
-			</tbody>
-			</table>
-			</div>
-	    </div>
-	    <div class="col-md-9">
+	    <div class="col-md-12">
 	    	<h1 style="margin-bottom: 40px; margin-top: 50px; margin-left: 5%; font-family: 'MBC1961GulimM';">'${keyword}' 에 대한 검색 결과입니다.<span class="badge">${postCount}</span></h1>
 	    	
 	    		<table class="table table-hover board" style="margin-bottom: 0px; width:100%; table-layout: fixed;">

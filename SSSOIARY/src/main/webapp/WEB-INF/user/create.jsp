@@ -30,11 +30,26 @@
 	    font-weight: normal;
 	    font-style: normal;
 	}
+	body {
+		background: linear-gradient(137deg, #FAECC5, #FFEAF3, #ECEBFF, #E4F7BA);
+		background-size: 800% 800%;
+		animation: gradi 13s ease infinite;
+	}
+	.ssoiary {
+		color: white;
+		background: linear-gradient(137deg, #FFE08C, #FFD9EC, #B2CCFF, #BCE067);
+	    color: transparent;
+	    -webkit-background-clip: text;
+	}
+	@keyframes gradi {
+	    0%{background-position:0% 50%}
+  	 	50%{background-position:100% 50%}
+    	100%{background-position:0% 50%}
+	}	
 	.title {
 		margin-top: 20px;
 		height: 150px;
 		background: black;
-		color: white;
 		font-family: 'MBC1961GulimM';
 		font-size: 75px;
 		font-weight: bolder;
@@ -99,7 +114,7 @@
 
 <section>
 <a href="/"><div class="container-fluid title">
-	<span style="margin-top: 13px;">SSOIARY.</span>
+	<span style="margin-top: 13px;" class="ssoiary">SSOIARY.</span>
 </div></a>
 <div class="container">
 <h1 style="margin-bottom: 40px; margin-left: 5%; margin-top: 100px; font-family: 'MBC1961GulimM';">회원가입</h1>
@@ -167,10 +182,10 @@
 					</c:forEach>
 				</c:if>
 		</div>
-		<button type="submit" class="btn btn-primary">Submit</button>
+		<button type="submit" class="btn btn-primary">회원가입</button>
+		<a href="/user/login" class="btn btn-secondary">돌아가기</a>
 	</form>	
 </div>
 </section>
-
 </body>
 </html>

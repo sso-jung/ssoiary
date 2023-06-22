@@ -18,6 +18,15 @@ public interface FreeboardPostMapper {
     List<FreeboardPost> selectAll();
     
     @Select("""
+    		select * from (
+					select * from freeboard_post
+					order by id desc
+					)
+    		where rownum <= 10
+    		""")
+    List<FreeboardPost> selectOnly10();
+    
+    @Select("""
     		select p.*, count(r.id) as reply
 			from freeboard_post p
 			left join freeboard_reply r on p.id = r.id

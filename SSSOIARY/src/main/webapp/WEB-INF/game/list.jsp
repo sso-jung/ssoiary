@@ -1,9 +1,10 @@
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>    
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,6 +27,18 @@
 	    font-weight: normal;
 	    font-style: normal;
 	}
+	@font-face {
+	    font-family: 'omyu_pretty';
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+	    font-weight: normal;
+	    font-style: normal;
+	}
+	.ssoiary {
+		color: white;
+		background: linear-gradient(137deg, #FFE08C, #FFD9EC, #B2CCFF, #BCE067);
+	    color: transparent;
+	    -webkit-background-clip: text;
+	}	
 	.header {
 		margin-top: 20px;
 		height: 150px;
@@ -40,62 +53,110 @@
 	}
 	a {
 		text-decoration: none;
+		color: black;
 	}
-	h1,ul {
-		font-family: 'GangwonEdu_OTFBoldA';
-	}
-	ul {
-		font-size: 30px;
+	.col-md-3 {
+		border-right: 1px solid lightgray;
 	}
 	th {
 		text-align: center;
 	}
-	td {
+	table.ranking td, input, table.board td {
 		text-align: center;
 		text-overflow: ellipsis;
 		overflow: hidden;
 		white-space: nowrap;
+	} /* 랭킹 표 */
+	h1.info {
+		font-family: 'GangwonEdu_OTFBoldA';
+	}
+	.nav-link {
+		font-size: 30px;
+		font-family: 'omyu_pretty';
+		white-space: nowrap;
+		font-weight: lighter;
+	}
+	.navbar-text {
+		font-family: 'omyu_pretty';
+		font-size: 32px;
 	}
 	.dropdown-item {
 		font-size: 24px;
+		font-family: 'omyu_pretty';
 	}
 	@media (min-width: 768px) {
 	  .nav-item, .dropdown-item {
 	  	text-align: center;
 	  }
-	}	
+	}/* NavBar */
+	@media (max-width: 767px) {
+	  div[style*="width: 60%;"] {
+	    width: 100% !important;
+	  }
+	}
+	.col-md-10 {
+		display: flex;
+		flex-direction: column;
+		margin-top: 50px;
+	}
+	.page-item {
+		font-size: 18px;
+		font-family: sans-serif;
+	}
+	.badge {
+		background:#FECDDE;
+		margin-left: 10px;
+	}
+	.btn-sm {
+		line-height: 1;
+		font-size: 13px;
+	}
+	.page-item.active .page-link {
+ 		background-color: #4375DB;
+	}
 </style>
+<script type="text/javascript">
+	$(document).on('click', '#deletePost', function(e) {	// 삭제 버튼
+	  e.preventDefault();
+  	  var pageNum = ${paging.pageNum};
+  	  var postId = $(this).data('post-id');
+	  var deleteUrl = "/freeboard/page/" + pageNum+ "/10?deleteId=" + postId;
+	  var result = confirm("정말 삭제하시겠습니까?");
+	  if (result) {
+		  window.location.href = deleteUrl;  
+	  } else {
+	  }
+	});
+</script>
 <title>SSOIARY</title>
 </head>
 <body>
 
-<section style="margin-bottom: 100px;">
 <a href="/"><div class="container-fluid header">
-	<span style="margin-top: 13px;">SSOIARY.</span>
+	<span style="margin-top: 13px;" class="ssoiary">SSOIARY.</span>
 </div></a>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark justify-content-center">
 	<div class="container">
-  <h2 class="navbar-text" style="color:white; font-weight: bold; margin-right: 50px;">CATEGORY</h2>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
       </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      <li class="nav-item" style="width:200px;">
-        <a class="nav-link" href="/" style="color:white;">Home </a>
+      <li class="nav-item" style="width:250px;">
+        <a class="nav-link" href="/" style="color:white;">HOME </a>
       </li>
-      <li class="nav-item" style="width:200px;">
+      <li class="nav-item" style="width:250px;">
         <a class="nav-link" href="/freeboard/page/1/10" style="color:white;">FREE BOARD</a>
       </li>
-      <li class="nav-item dropdown" style="width:200px;">
+      <li class="nav-item dropdown" style="width:250px;">
         <a class="nav-link dropdown-toggle" href="#" style="color:white;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           DIARY
         </a>
         <ul class="dropdown-menu" style="background: #E3E3E3;">
-          <li><a class="dropdown-item" href="#">SCHEDULER</a></li>
+          <li><a class="dropdown-item" href="/diary/monthly/list">SCHEDULER</a></li>
         </ul>
-      <li class="nav-item" style="width:200px;">
+      <li class="nav-item" style="width:250px;">
         <a class="nav-link active" aria-current="page" href="/game/list" style="color: #FECDDE;">GAME</a>
       </li>
       </li>
@@ -104,8 +165,13 @@
   </div>
 </nav>
 
-<h1>아직 구현 안함</h1>
-</section>
+<div class="container" style="margin-bottom:100px;">
+	<div class="row d-flex flex-md-row">
+	    <div class="col-md-12">
+	    	<h1 style="margin-bottom: 40px; margin-top: 50px; margin-left: 5%; font-family: 'MBC1961GulimM';">게임 게시판<span class="badge">${postCount}</span></h1>
+	    </div>
+	</div>
+</div>
 
 </body>
 </html>
